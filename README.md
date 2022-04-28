@@ -1,6 +1,19 @@
 # Development
 
+## To install
+create virtual enviromnent
+python -m venv venv
 
+activate venv 
+. venv/bin/activate
+
+update pip
+pip install -U pip
+
+install dependencies
+pip install -r requirements.txt
+
+----------------
 
 ## Getting started
 
