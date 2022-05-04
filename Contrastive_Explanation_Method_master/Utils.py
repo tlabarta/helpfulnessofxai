@@ -69,7 +69,7 @@ def generate_data(data, id, target_label):
     return inputs, target_vec
 
 def model_prediction(model, inputs):
-    prob = model.model.predict(inputs)
+    prob = model.predict(inputs)
     predicted_class = np.argmax(prob)
     prob_str = np.array2string(prob).replace('\n','')
     return prob, predicted_class, prob_str

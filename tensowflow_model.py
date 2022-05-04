@@ -20,19 +20,14 @@ def train():
     )
     return model
 
-def load_image(img_path):
-    # each model requires its own imagesize, check docs before using on another model
-    img = image.load_img(img_path, target_size=(224, 224))
-    img = image.img_to_array(img)
-    img = img.reshape(224, 224, 3)
-    print(img.shape)
-    return img
-    
 
-def predict(model, img):
-    img = np.expand_dims(img, axis=0)
-    img = tf.keras.applications.xception.preprocess_input(img)
-    print(img.shape)
-    preds = model.predict(img)
+def predict(model, img_path):
+    # each model requires its own imagesize, check docs before using on another model
+    img = image.load_img(img_path, target_size=(299, 299))
+    x = image.img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    x = tf.keras.applications.xception.preprocess_input(x)
+
+    preds = model.predict(x)
     # print top 3 predictions
     print('Predicted:', tf.keras.applications.xception.decode_predictions(preds, top=3)[0])
