@@ -36,3 +36,4 @@ def predict(model, img):
     preds = model.predict(img)
     # print top 3 predictions
     print('Predicted:', tf.keras.applications.xception.decode_predictions(preds, top=3)[0])
+    return preds
