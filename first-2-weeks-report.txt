@@ -1,0 +1,15 @@
+Done:
+* tried out vgg16 and alexnet models + applied gradcam methods on both
+                            (pytorch implementation, pretrained on imagenet)
+Doing:
+* extracting confidence scores of model predictions
+* preparing images for the model to classify in batch
+Plans:
+* look for a survey tool that can shuffle questions
+* look for pictures that would be negatively classified (the biggest challenge for now imho)
+Problems:
+*
+*
+Open Questions:
+* latex template - stick to ieee template or any scientific one works?
+*
