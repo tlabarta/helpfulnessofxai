@@ -1,50 +1,34 @@
-import tensorflow as tf
-from tensorflow import keras
-from keras import datasets, preprocessing
-from dataset_handler import DatasetHandler
-from keras.preprocessing import image
+from keras.applications.vgg16 import VGG16
+from keras.applications.vgg16 import preprocess_input
+import keras.backend as K
 import numpy as np
+import json
+import shap
 
+# load pre-trained model and choose two images to explain
+model = VGG16(weights='imagenet', include_top=True)
+X,y = shap.datasets.imagenet50()
+to_explain = X[[39,41]]
 
-def dataset_caller():
-    class_names = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-    index = 23456
-    dataset_1 = DatasetHandler(datasets.cifar10, class_names)
-    dataset_1.print(index)
+# load the ImageNet class names
+url = "https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json"
+fname = shap.datasets.cache(url)
+with open(fname) as f:
+    class_names = json.load(f)
 
+# explain how the input to the 7th layer of the model explains the top two classes
+def map2layer(x, layer):
+    feed_dict = dict(zip([model.layers[0].input], [preprocess_input(x.copy())]))
+    return K.get_session().run(model.layers[layer].input, feed_dict)
+e = shap.GradientExplainer(
+    (model.layers[7].input, model.layers[-1].output),
+    map2layer(X, 7),
+    local_smoothing=0 # std dev of smoothing noise
+)
+shap_values,indexes = e.shap_values(map2layer(to_explain, 7), ranked_outputs=2)
 
-# TODO move to a separate class
-def train():
-    # basic out-of-the-box Xception cnn implementation, pretrained on imagenet dataset
-    # for playing around with it and letting it classify random wikimedia pictures
-    model = tf.keras.applications.Xception(
-        include_top=True,
-        weights="imagenet",
-        input_tensor=None,
-        input_shape=None,
-        pooling=None,
-        classes=1000,
-        classifier_activation="softmax",
-    )
-    return model
+# get the names for the classes
+index_names = np.vectorize(lambda x: class_names[str(x)][1])(indexes)
 
-
-def predict(model, img_path):
-    # each model requires its own imagesize, check docs before using on another model
-    img = image.load_img(img_path, target_size=(299, 299))
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = tf.keras.applications.xception.preprocess_input(x)
-
-    preds = model.predict(x)
-    # print top 3 predictions
-    print('Predicted:', tf.keras.applications.xception.decode_predictions(preds, top=3)[0])
-
-
-model = train()
-predict(model, 'images/lion.jpg')
-predict(model, 'images/sealion.jpg')
-predict(model, 'images/sealions_on_the_beach.jpg')
-
-#dataset_caller()
-#this is a test
+# plot the explanations
+shap.image_plot(shap_values, to_explain, index_names)
