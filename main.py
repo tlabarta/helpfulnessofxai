@@ -1,9 +1,9 @@
 from keras.applications.vgg16 import VGG16
-from keras.applications.vgg16 import preprocess_input
-import keras.backend as K
+from keras.applications.vgg16 import preprocess_input, decode_predictions
 import numpy as np
-import json
 import shap
+import keras.backend as K
+import json
 
 # load pre-trained model and choose two images to explain
 model = VGG16(weights='imagenet', include_top=True)
@@ -20,11 +20,7 @@ with open(fname) as f:
 def map2layer(x, layer):
     feed_dict = dict(zip([model.layers[0].input], [preprocess_input(x.copy())]))
     return K.get_session().run(model.layers[layer].input, feed_dict)
-e = shap.GradientExplainer(
-    (model.layers[7].input, model.layers[-1].output),
-    map2layer(X, 7),
-    local_smoothing=0 # std dev of smoothing noise
-)
+e = shap.GradientExplainer((model.layers[7].input, model.layers[-1].output), map2layer(preprocess_input(X.copy()), 7))
 shap_values,indexes = e.shap_values(map2layer(to_explain, 7), ranked_outputs=2)
 
 # get the names for the classes
