@@ -1,8 +1,8 @@
-from keras.applications.vgg16 import VGG16
-from keras.applications.vgg16 import preprocess_input, decode_predictions
+#from keras.applications.vgg16 import VGG16
+#from keras.applications.vgg16 import preprocess_input, decode_predictions
 import numpy as np
 import shap
-import keras.backend as K
+#import keras.backend as K
 import json
 
 # load pre-trained model and choose two images to explain
@@ -28,3 +28,5 @@ index_names = np.vectorize(lambda x: class_names[str(x)][1])(indexes)
 
 # plot the explanations
 shap.image_plot(shap_values, to_explain, index_names)
+
+#print(X.shape)
