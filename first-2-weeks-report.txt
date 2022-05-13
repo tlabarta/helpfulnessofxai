@@ -12,4 +12,15 @@ Problems:
 *
 Open Questions:
 * latex template - stick to ieee template or any scientific one works?
-*
+* pictures for survey - from the same dataset or any?
+
+Meeting Notes:
+confidence score
+textual explanation
+
+post-hoc anti-hoc explanation before or after the decision
+
+shortcut model
+
+pertrubation of pictures
+famous pictures that fool models
