@@ -10,17 +10,18 @@ import utils
 import scipy
 import cv2
 
+import torchshape
+
 
 def LRP(picture,model,model_str,save):
     img = np.array(cv2.imread(picture))
 
-    #resizing for squared image
-    img = cv2.resize(img, dsize=(255, 255), interpolation=cv2.INTER_CUBIC)
-    img = (img[..., ::-1] / 255.0)[np.newaxis]
+    img = np.asarray(cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC))
+    img = (img[..., ::-1] / 255.0)
 
     mean = torch.Tensor([0.485, 0.456, 0.406]).reshape(1, -1, 1, 1)
     std = torch.Tensor([0.229, 0.224, 0.225]).reshape(1, -1, 1, 1)
-    X = (torch.FloatTensor(np.transpose(img,(0, 3, 1, 2)) * 1) - mean) / std
+    X = (torch.FloatTensor(img[np.newaxis].transpose([0, 3, 1, 2]) * 1) - mean) / std
 
 
     layers = list(model._modules['features']) + utils.toconv(list(model._modules['classifier']),model_str)
@@ -30,8 +31,7 @@ def LRP(picture,model,model_str,save):
     A = [X] +[None] * L
     for l in range(L):
         A[l + 1] = layers[l].forward(A[l])
-
-
+    print(A[-1].shape)
     scores = np.array(A[-1].data.view(-1))
     ind = np.argsort(-scores)
     for i in ind[:10]:
@@ -54,6 +54,7 @@ def LRP(picture,model,model_str,save):
 
             # lRP math
             z = incr(utils.newlayer(layers[l], rho).forward(A[l]))  # step 1
+
             s = (R[l + 1] / z).data  # step 2
             (z * s).sum().backward();
             c = A[l].grad  # step 3
@@ -67,9 +68,9 @@ def LRP(picture,model,model_str,save):
     else :
         layers_map = [31, 21, 11, 1]
 
-    name = picture.rsplit("/")[0]
+    name = picture.rsplit("/")[-1]
+    name = name.rsplit(".")[0]
     name = name +"_" +model_str
-    #TODO work on saving heatmap
     for i, l in enumerate(layers_map):
         if i == 1: utils.heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5,name,save)
         else:   utils.heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
@@ -102,7 +103,7 @@ def main():
 
     vgg = models.vgg16(pretrained=True)
     alex = models.alexnet(pretrained=True)
-    LRP('ILSVRC2012_val_00000001.JPEG',vgg,model_str="vgg",save=False)
+    LRP('pictures/ILSVRC2012_val_00000001.JPEG',vgg,model_str="vgg",save=True)
 
 if __name__ == '__main__':
     main()
