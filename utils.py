@@ -45,11 +45,11 @@ def heatmap(R, sx, sy,name=None,save=False):
     plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
     plt.axis('off')
 
-    if save:
-        name = "plot/" + name +".svg"
-        plt.imsave(name,my_cmap)
-
     plt.imshow(R, cmap=my_cmap, vmin=-b, vmax=b, interpolation='nearest')
+    if save :
+        name = "plots/" + name +".png"
+        plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
+
     plt.show()
 
 
@@ -100,21 +100,32 @@ def toconv(layers, model):
         if isinstance(layer, nn.Linear):
 
             newlayer = None
-            if i == 0 or i == 1: # 0 for vgg and 1 for alex
-                # modified
-                if model=="alex":
+            if model == "alex":
+                if i == 1:
                     m, n = 256, layer.weight.shape[0]
+                    print("layer", layer.weight.shape[0])
                     newlayer = nn.Conv2d(m, n, 6)
                     newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 6, 6))
+
                 else:
+                    print("test")
+                    m, n = layer.weight.shape[1], layer.weight.shape[0]
+                    newlayer = nn.Conv2d(m, n, 1)
+                    newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 1, 1))
+
+            else:
+                if i == 0:  # 0 for vgg and 1 for alex
                     m, n = 512, layer.weight.shape[0]
+                    print("layer",layer.weight.shape[0])
+
                     newlayer = nn.Conv2d(m, n, 7)
                     newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 7, 7))
 
-            else:
-                m, n = layer.weight.shape[1], layer.weight.shape[0]
-                newlayer = nn.Conv2d(m, n, 1)
-                newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 1, 1))
+                else:
+                    print("test")
+                    m, n = layer.weight.shape[1], layer.weight.shape[0]
+                    newlayer = nn.Conv2d(m, n, 1)
+                    newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 1, 1))
 
             newlayer.bias = nn.Parameter(layer.bias)
 
