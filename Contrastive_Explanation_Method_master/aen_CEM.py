@@ -92,10 +92,7 @@ class AEADEN:
         """--------------------------------"""
         # prediction BEFORE-SOFTMAX of the model
         self.delta_img = self.orig_img-self.adv_img
-        self.delta_img_s = self.orig_img-self.adv_img_s
         if self.mode == "PP":
-            # !!!!!!!!!!!!!!!!!!!!!!!!!
-            print(type(self.delta_img))
             self.ImgToEnforceLabel_Score = model.predict(self.delta_img)
             self.ImgToEnforceLabel_Score_s = model.predict(self.delta_img_s)
         elif self.mode == "PN":
@@ -184,7 +181,7 @@ class AEADEN:
         overall_best_dist = [1e10]*batch_size
         overall_best_attack = [np.zeros(imgs[0].shape)]*batch_size
 
-        for binary_search_steps_idx in range(self.BINARY_SEARCH_STEPS):
+        for binary_search_steps_idx in tqdm(range(self.BINARY_SEARCH_STEPS)):
             # completely reset adam's internal state.
             self.sess.run(self.init)
             img_batch = imgs[:batch_size]
@@ -192,7 +189,6 @@ class AEADEN:
 
             current_step_best_dist = [1e10]*batch_size
             current_step_best_score = [-1]*batch_size
-            print("!!!!!", img_batch.shape)
             # set the variables so that we don't have to send them over again
             self.sess.run(self.setup, {self.assign_orig_img: img_batch,
                                        self.assign_target_lab: label_batch,
@@ -200,11 +196,10 @@ class AEADEN:
                                        self.assign_adv_img: img_batch,
                                        self.assign_adv_img_s: img_batch})
 
-            for iteration in tqdm(range(self.MAX_ITERATIONS)):
+            for iteration in range(self.MAX_ITERATIONS):
                 # perform the attack
                 self.sess.run([self.train])
                 self.sess.run([self.adv_updater, self.adv_updater_s])
-                print("")
                 Loss_Overall, Loss_EN, OutputScore, adv_img = self.sess.run([self.Loss_Overall, self.EN_dist, self.ImgToEnforceLabel_Score, self.adv_img])
                 Loss_Attack, Loss_L2Dist, Loss_L1Dist, Loss_AE_Dist = self.sess.run([self.Loss_Attack, self.Loss_L2Dist, self.Loss_L1Dist, self.Loss_AE_Dist])
                 target_lab_score, max_nontarget_lab_score_s = self.sess.run([self.target_lab_score, self.max_nontarget_lab_score])
