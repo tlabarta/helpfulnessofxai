@@ -22,4 +22,4 @@ imgpath = './data/images/gazelle.jpg'
 gradcam.explain(vgg.model, imgpath)
 
 # Example for LRP
-#LRP.LRP(imgpath,alex.model,alex.name)
+LRP.LRP(imgpath,vgg.model,vgg.name)

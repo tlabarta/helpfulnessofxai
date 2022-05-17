@@ -26,7 +26,7 @@ class Vgg16:
 class AlexNet:
 
     def __init__(self):
-        self.model = models.vgg16(pretrained=True)
+        self.model = models.alexnet(pretrained=True)
         self.name = "alex"
 
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",

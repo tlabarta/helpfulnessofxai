@@ -71,11 +71,8 @@ def toconv(layers, model):
         if isinstance(layer, nn.Linear):
 
             newlayer = None
-            print(model=="alex")
             if model == "alex":
-                print("test", i)
                 if i == 1:
-                    print("test")
                     m, n = 256, layer.weight.shape[0]
                     newlayer = nn.Conv2d(m, n, 6)
                     newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 6, 6))
@@ -116,7 +113,6 @@ def LRP(picture, model, model_str, save=True):
     :param save: if we want to save the results or not
     :return: None
     """
-    print(model_str)
     img = np.array(cv2.imread(picture))
 
     img = np.asarray(cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC))
@@ -174,7 +170,7 @@ def LRP(picture, model, model_str, save=True):
     name = name.rsplit(".")[0]
     name = name + "_" + model_str
     for i, l in enumerate(layers_map):
-        if l == layers_map[-1]:
+        if l == layers_map[-1] and model_str=="vgg":
             heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
         else:
             heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
@@ -192,4 +188,7 @@ def LRP(picture, model, model_str, save=True):
     c, cp, cm = A[0].grad, lb.grad, hb.grad  # step 3
     R[0] = (A[0] * c + lb * cp + hb * cm).data
 
-    heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
+    if model_str == "alex":
+        heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
+    else:
+        heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
