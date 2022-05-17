@@ -10,8 +10,8 @@ class Vgg16:
         self.name = "vgg"
 
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
-                     "imagenet_class_index.json")
-        with open("imagenet_class_index.json", "r") as h:
+                     "data/imagenet_class_index.json")
+        with open("data/imagenet_class_index.json", "r") as h:
             self.labels = json.load(h)
 
     def train(self):
@@ -30,8 +30,8 @@ class AlexNet:
         self.name = "alex"
 
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
-                     "imagenet_class_index.json")
-        with open("imagenet_class_index.json", "r") as h:
+                     "data/imagenet_class_index.json")
+        with open("data/imagenet_class_index.json", "r") as h:
             self.labels = json.load(h)
 
     def train(self):

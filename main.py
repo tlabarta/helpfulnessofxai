@@ -1,5 +1,5 @@
-from methods import data_handler, gradcam, models
-
+from methods import data_handler, gradcam, LRP
+import models
 # define model
 vgg = models.Vgg16()
 alex = models.AlexNet()
@@ -20,3 +20,6 @@ labels = data_handler.get_labels()
 # use xai to explain model prediction
 imgpath = './data/images/gazelle.jpg'
 gradcam.explain(vgg.model, imgpath)
+
+# Example for LRP
+#LRP.LRP(imgpath,alex.model,alex.name)

@@ -5,6 +5,8 @@ import json
 from torchvision.datasets.utils import download_url
 
 
+
+
 def get_image(path):
     # get the image from the dataloader
     dataset = datasets.ImageFolder(root=path, transform=transform())
@@ -20,11 +22,12 @@ def transform():
     return transform
 
 
+
 def get_labels():
     # Download class labels from imagenet dataset
     download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
-                 "imagenet_class_index.json")
+                 "data/imagenet_class_index.json")
 
-    with open("imagenet_class_index.json", "r") as h:
+    with open("data/imagenet_class_index.json", "r") as h:
         labels = json.load(h)
     return labels
