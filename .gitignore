@@ -2,3 +2,5 @@
 .ipynb_checkpoints
 *.jpg
 *.json
+*.jpeg
+*.h5

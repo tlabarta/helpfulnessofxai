@@ -21,12 +21,14 @@
 import sys
 import tensorflow as tf
 import numpy as np
+##!!!!
 from tqdm import tqdm
 
 
 class AEADEN:
     def __init__(self, sess, model, mode, AE, batch_size, kappa, init_learning_rate,
                  binary_search_steps, max_iterations, initial_const, beta, gamma):
+
 
         image_size, num_channels, nun_classes = model.image_size, model.num_channels, model.num_labels
         shape = (batch_size, image_size, image_size, num_channels)
@@ -92,6 +94,7 @@ class AEADEN:
         """--------------------------------"""
         # prediction BEFORE-SOFTMAX of the model
         self.delta_img = self.orig_img-self.adv_img
+        self.delta_img_s = self.orig_img-self.adv_img_s
         if self.mode == "PP":
             self.ImgToEnforceLabel_Score = model.predict(self.delta_img)
             self.ImgToEnforceLabel_Score_s = model.predict(self.delta_img_s)
@@ -125,13 +128,10 @@ class AEADEN:
         self.Loss_L2Dist_s  = tf.reduce_sum(self.L2_dist_s)
         self.Loss_Attack    = tf.reduce_sum(self.const*Loss_Attack)
         self.Loss_Attack_s  = tf.reduce_sum(self.const*Loss_Attack_s)
-        # !!!!!!!!
-        #self.Loss_AE_Dist = 0
-        #self.Loss_AE_Dist_s = 0
-        if self.mode == "PP" and self.AE:
+        if self.mode == "PP":
             self.Loss_AE_Dist   = self.gamma*tf.square(tf.norm(self.AE(self.delta_img)-self.delta_img))
             self.Loss_AE_Dist_s = self.gamma*tf.square(tf.norm(self.AE(self.delta_img)-self.delta_img_s))
-        elif self.mode == "PN" and self.AE:
+        elif self.mode == "PN":
             self.Loss_AE_Dist   = self.gamma*tf.square(tf.norm(self.AE(self.adv_img)-self.adv_img))
             self.Loss_AE_Dist_s = self.gamma*tf.square(tf.norm(self.AE(self.adv_img_s)-self.adv_img_s))
 
@@ -189,6 +189,7 @@ class AEADEN:
 
             current_step_best_dist = [1e10]*batch_size
             current_step_best_score = [-1]*batch_size
+
             # set the variables so that we don't have to send them over again
             self.sess.run(self.setup, {self.assign_orig_img: img_batch,
                                        self.assign_target_lab: label_batch,
@@ -200,6 +201,7 @@ class AEADEN:
                 # perform the attack
                 self.sess.run([self.train])
                 self.sess.run([self.adv_updater, self.adv_updater_s])
+
                 Loss_Overall, Loss_EN, OutputScore, adv_img = self.sess.run([self.Loss_Overall, self.EN_dist, self.ImgToEnforceLabel_Score, self.adv_img])
                 Loss_Attack, Loss_L2Dist, Loss_L1Dist, Loss_AE_Dist = self.sess.run([self.Loss_Attack, self.Loss_L2Dist, self.Loss_L1Dist, self.Loss_AE_Dist])
                 target_lab_score, max_nontarget_lab_score_s = self.sess.run([self.target_lab_score, self.max_nontarget_lab_score])
