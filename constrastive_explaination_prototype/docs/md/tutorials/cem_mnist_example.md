@@ -21,7 +21,7 @@ Since the provided inference model ouputs the right format, we don't need to inc
 
 ```python
 import numpy as np
-import maxi
+import constrastive_explaination_prototype.src.maxi
 import matplotlib.pyplot as plt
 
 from mnist_tf.utils import setup_mnist
@@ -103,7 +103,7 @@ Below you can see the resulting savepoints with respective pertinent positive ex
 
 ```python
 import numpy as np
-import maxi
+import constrastive_explaination_prototype.src.maxi
 import matplotlib.pyplot as plt
 
 from mnist_tf.utils import setup_mnist
@@ -171,7 +171,7 @@ For this example, we will utilize the same MNIST data set and inference model as
 ```python
 import numpy as np
 
-import maxi
+import constrastive_explaination_prototype.src.maxi
 from mnist.utils import setup_mnist
 ```
 
@@ -296,7 +296,7 @@ import matplotlib.pyplot as plt
 
 from mnist.utils import setup_mnist
 
-import maxi
+import constrastive_explaination_prototype.src.maxi
 
 
 def main():

@@ -101,6 +101,8 @@ class Autoencoder():
     def fit(self, data_path, epochs=10, use_multiprocessing=False):
         # a small toy dataset from imagenet
         x=np.load(data_path)
+        # normalize
+        x = x / 255
         x_train,x_val = train_test_split(x, test_size=0.2, random_state=123)
         self.autoencoder.fit(x_train, x_train, batch_size=32,epochs=epochs,verbose=1,validation_data=(x_val, x_val), use_multiprocessing=use_multiprocessing)
         
@@ -109,4 +111,7 @@ class Autoencoder():
         
     def save(self, path):
         self.autoencoder.save(path, save_format='h5')
+    
+    def __call__(self, data):
+        return self.autoencoder(data)[0]
         

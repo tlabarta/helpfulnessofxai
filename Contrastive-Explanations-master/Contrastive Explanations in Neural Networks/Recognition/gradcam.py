@@ -207,7 +207,7 @@ class Contrast(object):
         # The only change to Grad-CAM code
         ce_loss = nn.CrossEntropyLoss()
         im_label_as_var = Variable(torch.from_numpy(np.asarray([Q])))
-        pred_loss = ce_loss(logit, im_label_as_var)
+        pred_loss = ce_loss(logit, im_label_as_var.long()) # .long() hinzugefügt
 
         self.model_arch.zero_grad()
         pred_loss.backward()

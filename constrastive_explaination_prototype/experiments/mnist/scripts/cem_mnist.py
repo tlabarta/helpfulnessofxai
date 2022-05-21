@@ -1,5 +1,5 @@
 import numpy as np
-import maxi
+import constrastive_explaination_prototype.src.maxi
 import matplotlib.pyplot as plt
 from mnist_tf.utils import setup_mnist
 
