@@ -27,4 +27,4 @@ def explain(model, imgpath):
     grayscale_cam = cam(input_tensor=input_tensor, targets=None, aug_smooth=True, eigen_smooth=True)[0, :]
     visualization = show_cam_on_image(img, grayscale_cam, use_rgb=True, colormap=cv2.COLORMAP_JET)  #
     im = Image.fromarray(visualization)
-    im.save("gradcam.jpg")
+    im.save("results/gradcam/gradcam.jpg")
