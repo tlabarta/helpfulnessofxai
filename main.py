@@ -1,4 +1,4 @@
-from methods import data_handler, gradcam, LRP
+from methods import data_handler, gradcam, LRP, SHAP
 import models
 # define model
 vgg = models.Vgg16()
@@ -18,10 +18,10 @@ predictions = vgg.predict(img)
 labels = data_handler.get_labels()
 
 # use xai to explain model prediction
-imgpath = './data/images/gazelle.jpg'
-gradcam.explain(vgg.model, imgpath)
+imgpath = './data/'
+#gradcam.explain(vgg.model, imgpath)
 
 # Example for LRP
-LRP.LRP(imgpath,vgg.model,vgg.name)
+#LRP.LRP(imgpath,vgg.model,vgg.name)
 
 SHAP.explain(vgg.model, imgpath)
