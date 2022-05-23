@@ -23,3 +23,5 @@ gradcam.explain(vgg.model, imgpath)
 
 # Example for LRP
 LRP.LRP(imgpath,vgg.model,vgg.name)
+
+SHAP.explain(vgg.model, imgpath)
