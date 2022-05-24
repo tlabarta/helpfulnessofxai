@@ -4,7 +4,7 @@ import argparse
 import numpy as np
 import cv2
 
-# TODO gradcam
+# TODO use argparse for single mpdules once all explain methods are in here
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
