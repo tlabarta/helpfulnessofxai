@@ -1,25 +1,35 @@
 from methods import data_handler, gradcam, LRP
 import models
-# define model
-vgg = models.Vgg16()
-alex = models.AlexNet()
 
-vgg.train()
-alex.train()
+# TODO Argparse for dorect calling
+def main(Vgg:bool,
+         AlexNet : bool,
+         num_images : int,
+         img_folder: str,
+         ):
 
-# import image
-img_folder = './data/'
-img = data_handler.get_image(img_folder)
+    # define model
+    if Vgg : vgg = models.Vgg16()
+    if AlexNet : alex = models.AlexNet()
 
-# let model do a prediction
-predictions = vgg.predict(img)
+    # import image
+    data = data_handler.get_image(img_folder)
+    labels = data_handler.get_labels()
 
-# get all class labels
-labels = data_handler.get_labels()
+    imgpath = './data/images/gazelle.jpg'
 
-# use xai to explain model prediction
-imgpath = './data/images/gazelle.jpg'
-gradcam.explain(vgg.model, imgpath)
+    for i in range(num_images):
+        img, _ = next(data)
+        print(img.shape)
+        print(img)
+        if vgg :
+            gradcam.explain(vgg.model, imgpath)
+            LRP.LRP(img, imgpath, vgg.model, vgg.name)
+        if alex :
+            gradcam.explain(alex.model, imgpath)
+            LRP.LRP(img, imgpath, alex.model, alex.name)
 
-# Example for LRP
-LRP.LRP(imgpath,vgg.model,vgg.name)
+
+
+if __name__ == '__main__' :
+    main(True,False,4,'./data/')
