@@ -4,8 +4,9 @@ import argparse
 import numpy as np
 import cv2
 
-# TODO use argparse for single mpdules once all explain methods are in here
 
+# TODO use argparse for single mpdules once all explain methods are in here
+# maybe noch confidence scores als arg hinzufügen
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
     parser.add_argument('--VGG', type=bool, default=True)
@@ -19,13 +20,12 @@ def main():
     parser.add_argument('--img_folder', type=str, default='./data/')
     args = parser.parse_args()
 
-
     # define models
     models_list = []
-    if args.VGG :
+    if args.VGG:
         vgg = models.Vgg16()
         models_list.append(vgg)
-    if args.AlexNet :
+    if args.AlexNet:
         alex = models.AlexNet()
         models_list.append(alex)
 
@@ -38,8 +38,12 @@ def main():
         img, _ = next(data)
 
         for model in models_list:
-            LRP.explain( model.model,img, files[i], model.name)
-            gradcam.explain(model.model,img,files[i],model.name)
+            LRP.explain(model.model, img, files[i], model.name)
+            gradcam.explain(model.model, img, files[i], model.name)
 
-if __name__ == '__main__' :
+    # preds = vgg.predict(img)
+    # print(data_handler.topk_confidence_scores(preds, labels, 5))
+
+
+if __name__ == '__main__':
     main()

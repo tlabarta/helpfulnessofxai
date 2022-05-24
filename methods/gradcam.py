@@ -21,4 +21,4 @@ def explain(model, img, file, model_str):
     name = os.path.splitext(file)[0]
     name = name + "_" + model_str
     im = Image.fromarray(visualization)
-    im.save("results/gradcam/" + name + ".jpg")
+    im.save("results/gradCam/" + name + ".jpg")
