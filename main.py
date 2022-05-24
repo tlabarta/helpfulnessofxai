@@ -1,11 +1,15 @@
 from methods import data_handler, gradcam, LRP, SHAP
 import models
+import matplotlib
+
 # define model
 vgg = models.Vgg16()
 alex = models.AlexNet()
 
 vgg.train()
 alex.train()
+
+matplotlib.use('TkAgg')
 
 # import image
 img_folder = './data/'
@@ -18,10 +22,10 @@ predictions = vgg.predict(img)
 labels = data_handler.get_labels()
 
 # use xai to explain model prediction
-imgpath = './data/'
+imgpath = './data/images/gazelle.jpg'
 #gradcam.explain(vgg.model, imgpath)
 
 # Example for LRP
 #LRP.LRP(imgpath,vgg.model,vgg.name)
 
-SHAP.explain(vgg.model, imgpath)
+SHAP.explain(vgg.model, img, labels)
