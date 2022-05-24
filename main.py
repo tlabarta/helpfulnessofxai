@@ -1,15 +1,16 @@
-from methods import data_handler, gradcam, LRP
+from methods import data_handler, gradcam, LRP, SHAP
 import models
 import argparse
 import numpy as np
 import cv2
 
+
 # TODO gradcam
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--VGG', type=bool, default=True)
-    parser.add_argument('--AlexNet', type=bool, default=False)
+    parser.add_argument('--VGG', type=bool, default=False)
+    parser.add_argument('--AlexNet', type=bool, default=True)
     parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
     parser.add_argument('--Lime', type=bool, default=False)
@@ -43,8 +44,9 @@ def main():
 
 
         for model in models_list:
-            LRP.explain(img, files[i], model.model, model.name)
+            #LRP.explain(img, files[i], model.model, model.name)
             #gradcam.explain(model.model,img)
+            SHAP.explain(model.model, img, files[i], labels, model.name)
 
 if __name__ == '__main__' :
     main()
