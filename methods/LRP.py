@@ -106,7 +106,7 @@ def toconv(layers, model):
 
 
 #TODO adjust to json label file
-def explain(img,picture, model, model_str, save=True):
+def explain(model,img,picture,model_str, save=True):
     """
     :param picture: at the moment string to picture location, can be changed to the picture itself
     :param model: the model to use, not the name the whole model itself
