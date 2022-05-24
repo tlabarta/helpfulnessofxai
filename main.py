@@ -1,48 +1,50 @@
-from methods import contrastive_explanation, data_handler, gradcam, LRP
+from methods import data_handler, gradcam, LRP
 import models
+import argparse
+import numpy as np
+import cv2
 
-# define model
-vgg = models.Vgg16()
-alex = models.AlexNet()
+# TODO gradcam
 
-vgg.train()
-alex.train()
-
-# import image
-img_folder = './data/'
-img = data_handler.get_image(img_folder)
-
-print(img.shape)
-
-# let model do a prediction
-predictions = vgg.predict(img)
-
-# get all class labels
-labels = data_handler.get_labels()
-
-# use xai to explain model prediction
-imgpath = './data/images/gazelle.jpg'
-
-# example for contrastive explanation
-# print("----------------CE_VGG_START--------------------")
-# vgg_model_dict = dict(type=vgg.name, arch=vgg.model, layer_name='features_29', input_size=(224, 224))
-# ce = contrastive_explanation.ContrastiveExplainer(vgg_model_dict)
-# ce.explain(img, img, 30, "./results/ContrastiveExplanation/gazelle.jpg")
-# print("----------------CE_VGG_FINISHED--------------------")
-
-print("----------------CE_ALEX_START--------------------")
-alexnet_model_dict = dict(type=alex.name, arch=alex.model, layer_name='features_11', input_size=(224, 224))
-ce = contrastive_explanation.ContrastiveExplainer(alexnet_model_dict)
-ce.explain(img, img, 30, f"./results/ContrastiveExplanation/gazelle_{alex.name}.jpg")
-print("----------------CE_ALEX_FINISHED--------------------")
+def main():
+    parser = argparse.ArgumentParser(description='run explain methods')
+    parser.add_argument('--VGG', type=bool, default=True)
+    parser.add_argument('--AlexNet', type=bool, default=False)
+    parser.add_argument('--LRP', type=bool, default=False)
+    parser.add_argument('--gradCam', type=bool, default=False)
+    parser.add_argument('--Lime', type=bool, default=False)
+    parser.add_argument('--CEM', type=bool, default=False)
+    parser.add_argument('--SHAP', type=bool, default=False)
+    parser.add_argument('--num_images', type=int, default=4)
+    parser.add_argument('--img_folder', type=str, default='./data/')
+    args = parser.parse_args()
 
 
-# example for GradCAM
-# gradcam.explain(vgg.model, imgpath)
+    # define models
+    models_list = []
+    if args.VGG :
+        vgg = models.Vgg16()
+        models_list.append(vgg)
+    if args.AlexNet :
+        alex = models.AlexNet()
+        models_list.append(alex)
 
-# # example for LRP
-# LRP.LRP(imgpath,vgg.model,vgg.name)
+    # import image
+    data = data_handler.get_image(args.img_folder)
+    files = data_handler.get_files(args.img_folder)
+    labels = data_handler.get_labels()
 
 
+    for i in range(args.num_images):
+        img, _ = next(data)
+
+        org_img = np.array(cv2.imread(args.img_folder+"images/"+files[i]))
+        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
 
 
+        for model in models_list:
+            LRP.explain(img, files[i], model.model, model.name)
+            #gradcam.explain(model.model,img)
+
+if __name__ == '__main__' :
+    main()
