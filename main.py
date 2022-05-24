@@ -1,37 +1,50 @@
 from methods import data_handler, gradcam, LRP
 import models
+import argparse
+import numpy as np
+import cv2
 
-# TODO Argparse for dorect calling
-# TODO nameming the output
 # TODO gradcam
 
-def main(Vgg:bool,
-         AlexNet : bool,
-         num_images : int,
-         img_folder: str,
-         ):
+def main():
+    parser = argparse.ArgumentParser(description='run explain methods')
+    parser.add_argument('--VGG', type=bool, default=True)
+    parser.add_argument('--AlexNet', type=bool, default=False)
+    parser.add_argument('--LRP', type=bool, default=False)
+    parser.add_argument('--gradCam', type=bool, default=False)
+    parser.add_argument('--Lime', type=bool, default=False)
+    parser.add_argument('--CEM', type=bool, default=False)
+    parser.add_argument('--SHAP', type=bool, default=False)
+    parser.add_argument('--num_images', type=int, default=4)
+    parser.add_argument('--img_folder', type=str, default='./data/')
+    args = parser.parse_args()
 
-    # define model
-    if Vgg : vgg = models.Vgg16()
-    if AlexNet : alex = models.AlexNet()
+
+    # define models
+    models_list = []
+    if args.VGG :
+        vgg = models.Vgg16()
+        models_list.append(vgg)
+    if args.AlexNet :
+        alex = models.AlexNet()
+        models_list.append(alex)
 
     # import image
-    data = data_handler.get_image(img_folder)
-    files = data_handler.get_files(img_folder)
+    data = data_handler.get_image(args.img_folder)
+    files = data_handler.get_files(args.img_folder)
     labels = data_handler.get_labels()
 
 
-    for i in range(num_images):
+    for i in range(args.num_images):
         img, _ = next(data)
-        if Vgg :
-            LRP.explain(img, files[i], vgg.model, vgg.name)
-        if AlexNet :
-            LRP.explain(img, files[i], alex.model, alex.name)
 
-    """
-    # load original: as long as nobody needs to use shuffle
-    img = np.asarray(cv2.imread("./data/images/"+files[0]))
-    img = np.asarray(cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC))
-    """
+        org_img = np.array(cv2.imread(args.img_folder+"images/"+files[i]))
+        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
+
+
+        for model in models_list:
+            LRP.explain(img, files[i], model.model, model.name)
+            #gradcam.explain(model.model,img)
+
 if __name__ == '__main__' :
-    main(True,False,4,'./data/')
+    main()
