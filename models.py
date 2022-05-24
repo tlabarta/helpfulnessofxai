@@ -27,7 +27,7 @@ class AlexNet:
 
     def __init__(self):
         self.model = models.alexnet(pretrained=True)
-        self.name = "alex"
+        self.name = "alexnet"
 
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
                      "data/imagenet_class_index.json")

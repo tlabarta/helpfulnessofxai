@@ -5,10 +5,13 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from torch import nn
 import numpy as np
+# new imports
+import os
+from utils.utils_contrastive_explanation import visualize_cam
+from torchvision.utils import save_image
 
 # If you have added your own network extraction in utils.py, please import it below
-from utils import find_alexnet_layer, find_vgg_layer, find_resnet_layer, find_densenet_layer, find_squeezenet_layer, find_resnet18_layer
-
+from utils.utils_contrastive_explanation import find_alexnet_layer, find_vgg_layer, find_resnet_layer, find_densenet_layer, find_squeezenet_layer, find_resnet18_layer
 
 class GradCAM(object):
     """Calculate GradCAM salinecy map.
@@ -229,3 +232,20 @@ class Contrast(object):
     def __call__(self, input, class_idx=None, retain_graph=False):
 
         return self.forward(input, class_idx, retain_graph)
+
+
+class ContrastiveExplainer():
+
+    def __init__(self, model_dict):
+        #self.vgg_gradcam = GradCAM(vgg_model_dict, False)
+        self.contrast = Contrast(model_dict, True)
+
+    def explain(self, img, preprocessed_img, contrast_class_idx, output_path):
+        folder_path = "/".join(output_path.split("/")[:-1])
+        if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
+        # Your choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
+        mask_contrast, _ = self.contrast(preprocessed_img, contrast_class_idx)  
+        hheatmap_contrast, result_contrast = visualize_cam(mask_contrast, img)
+        save_image(result_contrast, output_path)
+
