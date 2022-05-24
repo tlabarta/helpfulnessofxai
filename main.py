@@ -28,6 +28,6 @@ imgpath = './data/images/gazelle.jpg'
 # Example for LRP
 #LRP.LRP(imgpath,vgg.model,vgg.name)
 print("Shap is started")
-#SHAP.explain(vgg.model, img, labels, vgg.name)
+SHAP.explain(vgg.model, img, labels, vgg.name)
 SHAP.explain(alex.model, img, labels, alex.name)
 print("Shap is terminated")
