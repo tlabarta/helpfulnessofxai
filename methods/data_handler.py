@@ -42,11 +42,12 @@ def get_labels():
     return labels
 
 
-def topk_confidence_scores(preds, labels, k):
+def topk_confidence_scores(preds, labels, k, i=0):
     """
     :param preds: class predictions
     :param labels: class labels
     :param k: top k confidence scores to be returned
+    :param i: image number, a convenience for naming purposes
     saves the output graph into
     :return: a list of tuples with axis 0 being confidence scores, axis 1 - corresponding class labels
     """
@@ -62,16 +63,17 @@ def topk_confidence_scores(preds, labels, k):
     # extract corresponding class labels
     ind = np.argsort(predictions_tensor)[::-1][0:k]
     sorted_predicted_labels = np.array([])
-    for i in range(0, k):
-        str_label = str(ind[i])
+    for j in range(0, k):
+        str_label = str(ind[j])
         sorted_predicted_labels = np.append(sorted_predicted_labels, labels[str_label][1])
 
     # list of scores and class labels
     confidence_scores = np.vstack((sorted_confidence_scores, sorted_predicted_labels)).T
 
-    # plot scores
+    # plot & save scores
     plt.barh(sorted_predicted_labels[::-1], sorted_confidence_scores[::-1], height=0.5)
     plt.yticks(fontsize=20)
     plt.tight_layout()
-    plt.savefig("results/confidence_scores/scores.jpg")
+    figname = "results/confidence_scores/scores" + str(i) + ".jpg"
+    plt.savefig(figname)
     return confidence_scores

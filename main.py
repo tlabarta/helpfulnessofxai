@@ -41,8 +41,8 @@ def main():
             LRP.explain(model.model, img, files[i], model.name)
             gradcam.explain(model.model, img, files[i], model.name)
 
-    # preds = vgg.predict(img)
-    # print(data_handler.topk_confidence_scores(preds, labels, 5))
+    #preds = vgg.predict(img)
+    #print(data_handler.topk_confidence_scores(preds, labels, 5))
 
 
 if __name__ == '__main__':
