@@ -9,7 +9,7 @@ import os
 
 def get_image(path):
     # get the image from the dataloader
-    dataset = datasets.ImageFolder(root=path,transform=transform())
+    dataset = datasets.ImageFolder(root=path, transform=transform())
     dataloader = data.DataLoader(dataset=dataset, shuffle=False,batch_size=1)  # batch_size=1
     return iter(dataloader)
 

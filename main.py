@@ -9,7 +9,7 @@ import cv2
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--VGG', type=bool, default=False)
+    parser.add_argument('--VGG', type=bool, default=True)
     parser.add_argument('--AlexNet', type=bool, default=True)
     parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
@@ -40,13 +40,13 @@ def main():
         img, _ = next(data)
 
         org_img = np.array(cv2.imread(args.img_folder+"images/"+files[i]))
-        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
-
+        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC), dtype=np.float32)
+        org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
 
         for model in models_list:
             #LRP.explain(img, files[i], model.model, model.name)
             #gradcam.explain(model.model,img)
-            SHAP.explain(model.model, img, files[i], labels, model.name)
+            SHAP.explain(model.model, img, org_img, files[i], labels, model.name)
 
 if __name__ == '__main__' :
     main()
