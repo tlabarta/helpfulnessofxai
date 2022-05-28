@@ -44,9 +44,6 @@ def main():
         org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC), dtype=np.float32)
         org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
 
-        # plt.imshow(org_img)
-        # plt.show()
-
         for model in models_list:
             #LRP.explain(img, files[i], model.model, model.name)
             #gradcam.explain(model.model,img)
