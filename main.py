@@ -34,6 +34,7 @@ def main():
     # import image
     data = data_handler.get_image(args.img_folder)
     files = data_handler.get_files(args.img_folder)
+    files.sort()
     labels = data_handler.get_labels()
 
 
