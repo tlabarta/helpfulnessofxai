@@ -5,3 +5,6 @@
 *.jpeg
 *.h5
 /data/imagenetv2-matched-frequency-format-val
+*.png
+/Contrastive-Explanations-master/
+/constrastive_explaination_prototype/
