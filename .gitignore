@@ -4,3 +4,4 @@
 *.json
 *.jpeg
 *.h5
+/data/imagenetv2-matched-frequency-format-val

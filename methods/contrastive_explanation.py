@@ -244,8 +244,12 @@ class ContrastiveExplainer():
         folder_path = "/".join(output_path.split("/")[:-1])
         if not os.path.exists(folder_path):
             os.mkdir(folder_path)
+
+        torch_img = torch.from_numpy(img).permute(2, 0, 1).unsqueeze(0).float().div(255)
+        torch_img = F.upsample(torch_img, size=(224, 224), mode='bilinear', align_corners=False)
+        
         # Your choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
         mask_contrast, _ = self.contrast(preprocessed_img, contrast_class_idx)  
-        hheatmap_contrast, result_contrast = visualize_cam(mask_contrast, img)
+        heatmap_contrast, result_contrast = visualize_cam(mask_contrast, torch_img)
         save_image(result_contrast, output_path)
 
