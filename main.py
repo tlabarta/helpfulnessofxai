@@ -1,4 +1,5 @@
-from methods import data_handler, gradcam, LRP
+from curses import flash
+from methods import data_handler, gradcam, LRP, lime_M
 import models
 import argparse
 import numpy as np
@@ -38,8 +39,8 @@ def main():
         img, _ = next(data)
 
         for model in models_list:
-            LRP.explain( model.model,img, files[i], model.name)
-            gradcam.explain(model.model,img,files[i],model.name)
-
+            #LRP.explain( model.model,img, files[i], model.name)
+            #gradcam.explain(model.model,img,files[i],model.name)
+            lime_M.explain(model.model, img, files[i],model.name)
 if __name__ == '__main__' :
     main()
