@@ -238,7 +238,7 @@ class ContrastiveExplainer():
 
     def __init__(self, model_dict):
         #self.vgg_gradcam = GradCAM(vgg_model_dict, False)
-        self.contrast = Contrast(model_dict, True)
+        self.contrast = Contrast(model_dict)
 
     def explain(self, img, preprocessed_img, contrast_class_idx, output_path):
         folder_path = "/".join(output_path.split("/")[:-1])

@@ -1,9 +1,8 @@
-from methods import data_handler, gradcam, LRP, contrastive_explanation
+from methods import data_handler, gradcam, LRP, contrastive_explanation, lime
 import models
 import argparse
 import numpy as np
 import cv2
-import torch
 import torch.nn.functional as F
 
 # TODO gradcam
@@ -11,13 +10,13 @@ import torch.nn.functional as F
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
     parser.add_argument('--VGG', type=bool, default=True)
-    parser.add_argument('--AlexNet', type=bool, default=False)
+    parser.add_argument('--AlexNet', type=bool, default=True)
     parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
     parser.add_argument('--Lime', type=bool, default=False)
     parser.add_argument('--CEM', type=bool, default=False)
     parser.add_argument('--SHAP', type=bool, default=False)
-    parser.add_argument('--num_images', type=int, default=4)
+    parser.add_argument('--num_images', type=int, default=5)
     parser.add_argument('--img_folder', type=str, default='./data/')
     args = parser.parse_args()
 
@@ -49,9 +48,13 @@ def main():
         for model in models_list:
             # LRP.explain(img, files[i], model.model, model.name)
             #gradcam.explain(model.model,img)
-            model_dict = dict(type=model.name, arch=model.model, layer_name=model.ce_layer_name, input_size=(224, 224))
-            ce = contrastive_explanation.ContrastiveExplainer(model_dict)
-            ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{img_name}")
+            # model_dict = dict(type=model.name, arch=model.model, layer_name=model.ce_layer_name, input_size=(224, 224))
+            # ce = contrastive_explanation.ContrastiveExplainer(model_dict)
+            # # Choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
+            # ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{img_name}")
+            # lime_M.explain(model, img, files[i], model.name)
+            lime_ex = lime.LIMEExplainer(model)
+            lime_ex.explain(img, files[i])
 
 
 if __name__ == '__main__' :
