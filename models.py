@@ -23,6 +23,8 @@ class Vgg16:
         predictions = self.model(img)
         return predictions
 
+    def __call__(self, img):
+        return self.predict(img)
 
 class AlexNet:
 
