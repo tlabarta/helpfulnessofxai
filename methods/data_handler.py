@@ -3,7 +3,7 @@ from torch.utils import data
 import torchvision.transforms as transforms
 import json
 from torchvision.datasets.utils import download_url
-
+import os
 
 
 
@@ -11,8 +11,8 @@ def get_image(path):
     # get the image from the dataloader
     dataset = datasets.ImageFolder(root=path, transform=transform())
     dataloader = data.DataLoader(dataset=dataset, shuffle=False)  # batch_size=1
-    img, _ = next(iter(dataloader))
-    return img
+
+    return iter(dataloader)
 
 
 def transform():
@@ -21,6 +21,11 @@ def transform():
                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     return transform
 
+def get_files(path):
+    images = "images/"
+    files = os.listdir(path+images)
+
+    return files
 
 
 def get_labels():
