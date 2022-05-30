@@ -6,7 +6,7 @@ import copy
 
 import matplotlib
 from matplotlib import pyplot as plt
-
+import os
 """
 Model code and utility functions downloaded from   :
     https://git.tu-berlin.de/gmontavon/lrp-tutorial/-/tree/main
@@ -30,14 +30,13 @@ def heatmap(R, sx, sy,name=None,save=False):
     plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
     plt.axis('off')
 
-    plt.imshow(R, cmap=my_cmap, vmin=-b, vmax=b, interpolation='nearest')
 
     #modified
     if save :
         name = "results/LRP/" + name +".jpg"
         plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
 
-    plt.show()
+    plt.close()
 
 
 # --------------------------------------------------------------
@@ -71,7 +70,7 @@ def toconv(layers, model):
         if isinstance(layer, nn.Linear):
 
             newlayer = None
-            if model == "alex":
+            if model == "alexnet":
                 if i == 1:
                     m, n = 256, layer.weight.shape[0]
                     newlayer = nn.Conv2d(m, n, 6)
@@ -105,7 +104,7 @@ def toconv(layers, model):
 
 
 #TODO adjust to json label file
-def LRP(picture, model, model_str, save=True):
+def explain(model,img,file,model_str, save=True):
     """
     :param picture: at the moment string to picture location, can be changed to the picture itself
     :param model: the model to use, not the name the whole model itself
@@ -113,14 +112,11 @@ def LRP(picture, model, model_str, save=True):
     :param save: if we want to save the results or not
     :return: None
     """
-    img = np.array(cv2.imread(picture))
+    X = img
 
-    img = np.asarray(cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC))
-    img = (img[..., ::-1] / 255.0)
 
     mean = torch.Tensor([0.485, 0.456, 0.406]).reshape(1, -1, 1, 1)
     std = torch.Tensor([0.229, 0.224, 0.225]).reshape(1, -1, 1, 1)
-    X = (torch.FloatTensor(img[np.newaxis].transpose([0, 3, 1, 2]) * 1) - mean) / std
 
     layers = list(model._modules['features']) + toconv(list(model._modules['classifier']), model_str)
     L = len(layers)
@@ -161,13 +157,12 @@ def LRP(picture, model, model_str, save=True):
         else:
 
             R[l] = R[l + 1]
-    if model_str == "alex":
+    if model_str == "alexnet":
         layers_map = [15, 10, 7, 1]
     else:
         layers_map = [31, 21, 11, 1]
 
-    name = picture.rsplit("/")[-1]
-    name = name.rsplit(".")[0]
+    name = os.path.splitext(file)[0]
     name = name + "_" + model_str
     for i, l in enumerate(layers_map):
         if l == layers_map[-1] and model_str=="vgg":
@@ -188,7 +183,7 @@ def LRP(picture, model, model_str, save=True):
     c, cp, cm = A[0].grad, lb.grad, hb.grad  # step 3
     R[0] = (A[0] * c + lb * cp + hb * cm).data
 
-    if model_str == "alex":
+    if model_str == "alexnet":
         heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
     else:
         heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
