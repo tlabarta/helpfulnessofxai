@@ -4,7 +4,8 @@ import argparse
 import numpy as np
 import cv2
 
-# TODO use argparse for single mpdules once all explain methods are in here
+
+# TODO use argparse for single modules once all explain methods are in here
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
@@ -19,27 +20,32 @@ def main():
     parser.add_argument('--img_folder', type=str, default='./data/')
     args = parser.parse_args()
 
-
     # define models
     models_list = []
-    if args.VGG :
+    if args.VGG:
         vgg = models.Vgg16()
         models_list.append(vgg)
-    if args.AlexNet :
+    if args.AlexNet:
         alex = models.AlexNet()
         models_list.append(alex)
 
     # import image
     data = data_handler.get_image(args.img_folder)
     files = data_handler.get_files(args.img_folder)
+    files.sort()
     labels = data_handler.get_labels()
 
     for i in range(args.num_images):
         img, _ = next(data)
 
-        for model in models_list:
-            LRP.explain( model.model,img, files[i], model.name)
-            gradcam.explain(model.model,img,files[i],model.name)
+        org_img = np.array(cv2.imread("./data/images/" + files[i]))
+        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
+        org_img = org_img / 255.0
 
-if __name__ == '__main__' :
+        for model in models_list:
+            LRP.explain(model.model, img, files[i], model.name)
+            gradcam.explain(model.model, img, org_img, files[i], model.name)
+
+
+if __name__ == '__main__':
     main()

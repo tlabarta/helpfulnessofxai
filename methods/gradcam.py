@@ -7,11 +7,8 @@ import torchvision.transforms as transforms
 import os
 
 
-def explain(model, img, file, model_str):
+def explain(model, img,org_img,file,model_str):
     # loading original picture
-    org_img = np.array(cv2.imread("./data/images/" + file))
-    org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
-    org_img = org_img / 255.0
 
     target_layers = [model.features[-1]]
     cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False)  # use_cuda=args.use_cuda
