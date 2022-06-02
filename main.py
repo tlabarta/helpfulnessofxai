@@ -52,7 +52,7 @@ def main():
             # ce = contrastive_explanation.ContrastiveExplainer(model_dict)
             # # Choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
             # ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{img_name}")
-            # lime_M.explain(model, img, files[i], model.name)
+           
             lime_ex = lime.LIMEExplainer(model)
             lime_ex.explain(img, files[i])
 

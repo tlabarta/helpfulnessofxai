@@ -17,7 +17,7 @@ import os
 
 class LIMEExplainer():
 
-    def __init__(self, model, ):
+    def __init__(self, model):
         self.model = model
 
 
