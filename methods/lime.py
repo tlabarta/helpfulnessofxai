@@ -13,8 +13,6 @@ import os
 
 
 
-# explanation
-
 class LIMEExplainer():
 
     def __init__(self, model, ):

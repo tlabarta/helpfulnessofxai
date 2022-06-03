@@ -1,4 +1,4 @@
-from methods import data_handler, gradcam, LRP, contrastive_explanation, lime
+from methods import data_handler, gradcam, LRP, contrastive_explanation, lime, integrated_gradients
 import models
 import argparse
 import numpy as np
@@ -47,14 +47,16 @@ def main():
 
         for model in models_list:
             # LRP.explain(img, files[i], model.model, model.name)
-            #gradcam.explain(model.model,img)
+            # gradcam.explain(model.model,img)
             # model_dict = dict(type=model.name, arch=model.model, layer_name=model.ce_layer_name, input_size=(224, 224))
             # ce = contrastive_explanation.ContrastiveExplainer(model_dict)
-            # # Choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
+            # Choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
             # ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{img_name}")
-            # lime_M.explain(model, img, files[i], model.name)
-            lime_ex = lime.LIMEExplainer(model)
-            lime_ex.explain(img, files[i])
+            # lime_ex = lime.LIMEExplainer(model)
+            # lime_ex.explain(img, files[i])
+            ige = integrated_gradients.IntegratedGradientsExplainer(model)
+            ige.explain(img, files[i]) 
+
 
 
 if __name__ == '__main__' :

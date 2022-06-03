@@ -45,3 +45,6 @@ class AlexNet:
     def predict(self, img):
         predictions = self.model(img)
         return predictions
+
+    def __call__(self, img):
+        return self.predict(img)
