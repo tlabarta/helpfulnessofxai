@@ -1,4 +1,4 @@
-from PIL import Image 
+from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
@@ -11,13 +11,12 @@ from methods import data_handler
 import os
 
 
-
+# explanation
 
 class LIMEExplainer():
 
     def __init__(self, model, ):
         self.model = model
-
 
     def explain(self, img, file):
         # load picture
@@ -26,17 +25,18 @@ class LIMEExplainer():
         org_img = org_img / 255.0
 
         explainer = lime_image.LimeImageExplainer()
-        explanation = explainer.explain_instance(org_img.reshape(224, 224, 3), self.batch_predict, top_labels=5, hide_color=0, num_samples=1000)
+        explanation = explainer.explain_instance(org_img.reshape(224, 224, 3), self.batch_predict, top_labels=5,
+                                                 hide_color=0, num_samples=1000)
 
-        temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5, hide_rest=True)
-        
+        temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
+                                                    hide_rest=True)
+
         filename = os.path.splitext(file)[0]
         filename = filename + "_" + self.model.name + ".png"
         output_path = "./results/LIME/" + filename
-        
+
         plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
         plt.savefig(output_path)
-
 
     def batch_predict(self, imgs):
         """
@@ -51,16 +51,15 @@ class LIMEExplainer():
         probs = F.softmax(logits, dim=1)
 
         return probs.detach().numpy()
-    
 
     def get_preprocess_transform(self):
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                        std=[0.229, 0.224, 0.225])     
+                                         std=[0.229, 0.224, 0.225])
         transf = transforms.Compose([
             transforms.ToTensor(),
             normalize
-        ])    
+        ])
 
         return transf
 
-    
+

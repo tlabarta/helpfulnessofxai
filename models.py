@@ -10,6 +10,8 @@ class Vgg16:
         self.name = "vgg"
         self.ce_layer_name = 'features_29'
 
+
+
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
                      "data/imagenet_class_index.json")
         with open("data/imagenet_class_index.json", "r") as h:
@@ -23,8 +25,6 @@ class Vgg16:
         predictions = self.model(img)
         return predictions
 
-    def __call__(self, img):
-        return self.predict(img)
 
 class AlexNet:
 
@@ -33,6 +33,7 @@ class AlexNet:
         self.name = "alexnet"
         self.ce_layer_name = "features_11"
 
+
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
                      "data/imagenet_class_index.json")
         with open("data/imagenet_class_index.json", "r") as h:
@@ -45,6 +46,3 @@ class AlexNet:
     def predict(self, img):
         predictions = self.model(img)
         return predictions
-
-    def __call__(self, img):
-        return self.predict(img)

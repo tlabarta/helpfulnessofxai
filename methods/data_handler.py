@@ -9,18 +9,16 @@ import os
 
 def get_image(path):
     # get the image from the dataloader
-    dataset = datasets.ImageFolder(root=path,transform=transform())
-    dataloader = data.DataLoader(dataset=dataset, shuffle=False,batch_size=1)  # batch_size=1
+    dataset = datasets.ImageFolder(root=path, transform=transform())
+    dataloader = data.DataLoader(dataset=dataset, shuffle=False)  # batch_size=1
+
     return iter(dataloader)
 
 
 def transform():
-    # transforms.ToTensor() normalizes input data from 0-255 to 0-1
     transform = transforms.Compose([transforms.Resize((224, 224)),
                                     transforms.ToTensor(),
-                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-                                    ])
-
+                                    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
     return transform
 
 def get_files(path):
