@@ -35,14 +35,14 @@ class IntegratedGradientsExplainer():
         # Plot Overlayed Integrated Gradients
         original_image = np.transpose(input_tensor.cpu().detach().numpy()[0] , (1, 2, 0))# / 2) + 0.5
         fig, _ = viz.visualize_image_attr(attr_ig, original_image, method="blended_heat_map",sign="all",
-                                show_colorbar=True, title="Overlayed Integrated Gradients", use_pyplot=False)
+                                show_colorbar=True, cmap="Purples", title="Overlayed Integrated Gradients", use_pyplot=False)
         
         # save figure
-        image_name = file_name.split(".")[0]
-        format_str = file_name.split(".")[1]
-        output_path = f"results/IntegratedGradients/{image_name}_{self.model.name}.{format_str}"
-        fig.savefig(output_path)
-
+        # image_name = file_name.split(".")[0]
+        # format_str = file_name.split(".")[1]
+        # output_path = f"results/IntegratedGradients/{image_name}_{self.model.name}.{format_str}"
+        # fig.savefig(output_path)
+        return fig
         
 
     def __attribute_image_features(self, algorithm, input, **kwargs):

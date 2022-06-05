@@ -18,25 +18,43 @@ class LIMEExplainer():
     def __init__(self, model, ):
         self.model = model
 
-    def explain(self, img, file):
-        # load picture
-        org_img = np.array(cv2.imread("./data/images/" + file))
-        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
-        org_img = org_img / 255.0
+    # def explain(self, img, file):
+    #     # load picture
+    #     org_img = np.array(cv2.imread("./data/images/" + file))
+    #     org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
+    #     org_img = org_img / 255.0
+
+    #     explainer = lime_image.LimeImageExplainer()
+    #     explanation = explainer.explain_instance(org_img.reshape(224, 224, 3), self.batch_predict, top_labels=5,
+    #                                              hide_color=0, num_samples=1000)
+
+    #     temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
+    #                                                 hide_rest=True)
+
+    #     filename = os.path.splitext(file)[0]
+    #     filename = filename + "_" + self.model.name + ".png"
+    #     output_path = "./results/LIME/" + filename
+
+    #     plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
+    #     plt.savefig(output_path)
+
+
+    def explain(self, img_org):
 
         explainer = lime_image.LimeImageExplainer()
-        explanation = explainer.explain_instance(org_img.reshape(224, 224, 3), self.batch_predict, top_labels=5,
+        explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5,
                                                  hide_color=0, num_samples=1000)
 
         temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
                                                     hide_rest=True)
 
-        filename = os.path.splitext(file)[0]
-        filename = filename + "_" + self.model.name + ".png"
-        output_path = "./results/LIME/" + filename
+        plt.imshow(mark_boundaries(temp, mask)) # / 2 + 0.5
+        plt.axis('off')
+        fig = plt.gcf()
+        plt.close()
+        
+        return fig 
 
-        plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
-        plt.savefig(output_path)
 
     def batch_predict(self, imgs):
         """

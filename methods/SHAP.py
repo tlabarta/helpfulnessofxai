@@ -17,4 +17,7 @@ def explain(model, img, org_img, files, labels, model_str):
 
 
     shap.image_plot(shap_values=shap_values, pixel_values=org_img.reshape(1, 224, 224, 3)/255, labels=labels, show=False)
-    plt.savefig("results/shap/" + name + ".jpg")
+    fig = plt.gcf()
+    plt.close()
+    
+    return fig

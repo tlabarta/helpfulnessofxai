@@ -1,15 +1,13 @@
+from scipy import rand
 from torchvision import datasets
-from models import Vgg16, AlexNet
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 import torch
 from methods import data_handler
 import random
-from copy import deepcopy
 import itertools
-from PIL import Image
+import pickle
+from models import AlexNet, Vgg16
 
 
 def generate_model_testset_results(model, testset_path):
@@ -40,35 +38,21 @@ def generate_model_testset_results(model, testset_path):
         pred_max_confidences.append(probabilities.detach().numpy().max())
         pred_labels_idx.append(probabilities.detach().numpy().argmax())
         true_labels_idx.append(int(img_path[0].split("\\")[-2]))
+        print(img_names, pred_max_confidences)
         
     df = pd.DataFrame([img_names, pred_max_confidences, pred_labels_idx, true_labels_idx]).transpose()
     df.columns = ["img_name", "max_confidence", "pred_label", "true_label"]
     df["pred_is_correct"] = df["pred_label"] == df["true_label"]
 
     return df
-    
-
-def load_entire_val_set(img_folder):
-    """
-    Not needed so far
-    So liegen alle Bilder als np array vor; müssen aber als torch-tensor-vorliegen vorliegen
-    """
-    images = []
-    labels_idx = []
-    for img_path in tqdm(img_folder.imgs):
-        rand_img = img_folder.loader(img_path[0])
-        # resize
-        rand_img = rand_img.resize((224, 224))
-        # convert to np array
-        images.append(np.array(rand_img))
-        labels_idx.append(int(img_path[0].split("\\")[-2]))
-    return np.array(images), np.array(labels_idx)
 
 
-def create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex):
+def create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=None):
     """
 
     """
+    if seed:
+        random.seed(seed)
     # create first half of question with fixed images for all questionaire forms
     questionaires_list = get_fixed_img_questionaires(imgs_idx, xai_methods, model_names)
     # adding images works directly on the reference of 'questionaires_list'
@@ -92,6 +76,7 @@ def get_fixed_img_questionaires(imgs_idx, xai_methods, models):
                 questionaire.append(permutations[i*NUM_IMGS:i*NUM_IMGS+NUM_IMGS][(q+i) - NUM_IMGS])
             else:
                 questionaire.append(permutations[i*NUM_IMGS:i*NUM_IMGS+NUM_IMGS][q+i])
+        random.shuffle(questionaire)
         questionaires_list.append(questionaire)
     
     return questionaires_list
@@ -148,24 +133,30 @@ def add_random_unique_images(questionaires_list, imgs_idx, df_alex, df_vgg, mode
                 question = (rand_img_idx, rand_variant[1], rand_variant[0], rand_variant[2])
                 questionaire.append(question)
                 df_variants_count.loc[rand_variant]["count"] += 1
-         
 
+def save_questionaires(questionaires_list, path):      
+    with open(path,'wb') as f:
+        pickle.dump(questionaires_list, f)
 
 
 # must only be evaluated if testset hasn't already been evaluated
-# models = [Vgg16(), AlexNet()]
+models = [Vgg16(), AlexNet()]
 
-# for model in models:
-#     df = generate_model_testset_results(model, r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val')
-#     df.to_pickle(f"data2/stats/df_{model.name}_2.pickle")
+for model in models:
+    model.train()
+    df = generate_model_testset_results(model, r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val')
+    df.to_pickle(f"data2/stats/df_{model.name}_3.pickle")
 
 
 # create questionaires
 imgs_idx = list(range(10000))
-xai_methods = ['gradCam', 'LRP', 'SHAP', 'LIME', 'ConfidenceScores', 'IntegratedGradients']
+xai_methods = ['gradCAM', 'LRP', 'SHAP', 'LIME', 'ConfidenceScores', 'IntegratedGradients']
 model_names = ["alex", "vgg"]
 df_vgg = pd.read_pickle("./data2/stats/df_vgg.pickle")
 df_alex = pd.read_pickle("./data2/stats/df_alexnet.pickle")
 
-questionaires_list = create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex)
+questionaires_list = create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=3)
+save_questionaires(questionaires_list, "data2/questionaires.pickle")
+
 print(questionaires_list)
+print(len(questionaires_list))

@@ -26,17 +26,26 @@ def heatmap(R, sx, sy,name=None,save=False):
     my_cmap = plt.cm.seismic(np.arange(plt.cm.seismic.N))
     my_cmap[:, 0:3] *= 0.85
     my_cmap = ListedColormap(my_cmap)
+    # plt.figure(figsize=(sx, sy))
+    # plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
+    # plt.axis('off')
+    
     plt.figure(figsize=(sx, sy))
     plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
     plt.axis('off')
 
+    plt.imshow(R, cmap=my_cmap, vmin=-b, vmax=b)
 
     #modified
-    if save :
-        name = "results/LRP/" + name +".jpg"
-        plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
+    # if save :
+    #     name = "results/LRP/" + name +".jpg"
+    #     plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
 
+    # plt.close()
+    fig = plt.gcf()
     plt.close()
+    
+    return fig
 
 
 # --------------------------------------------------------------
@@ -184,6 +193,6 @@ def explain(model,img,file,model_str, save=True):
     R[0] = (A[0] * c + lb * cp + hb * cm).data
 
     if model_str == "alexnet":
-        heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
     else:
-        heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
