@@ -107,6 +107,7 @@ def add_random_unique_images(questionaires_list, imgs_idx, df_alex, df_vgg, mode
                 else:
                     questionaires_list[idx_qn][idx_q] += (False, )
                     df_variants_count.loc[question[2], "vgg", False]["count"] += 1
+                
                     
         # add addtional random images to each questionaire such that for every variant in df_variants_count the 
         # count will be 1
@@ -133,6 +134,7 @@ def add_random_unique_images(questionaires_list, imgs_idx, df_alex, df_vgg, mode
                 question = (rand_img_idx, rand_variant[1], rand_variant[0], rand_variant[2])
                 questionaire.append(question)
                 df_variants_count.loc[rand_variant]["count"] += 1
+
 
 def save_questionaires(questionaires_list, path):      
     with open(path,'wb') as f:

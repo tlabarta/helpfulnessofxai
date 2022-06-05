@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 import os
 import matplotlib.pyplot as plt
 
-def explain(model, img, org_img, file, model_str):
+def explain(model, img, org_img):
 
     org_img = np.float32(org_img) / 255
 
@@ -20,13 +20,7 @@ def explain(model, img, org_img, file, model_str):
     plt.imshow(visualization[0])
     plt.axis('off')
     fig = plt.gcf()
-    axes = fig.get_axes()
-
-    # Remove ticks and tick labels from plot.
-    # axes[0].set_ticks_position("none")
-    # axes[0].set_ticks_position("none")
-    # axes[0].set_yticklabels([])
-    # axes[0].set_xticklabels([])
     plt.close()
+
     return fig
 

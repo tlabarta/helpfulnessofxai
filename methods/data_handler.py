@@ -6,6 +6,7 @@ from torchvision.datasets.utils import download_url
 import os
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
 
 
 
@@ -42,7 +43,7 @@ def get_labels():
     return labels
 
 
-def get_question_image(testset_path, img_idx):
+def get_question_image(testset_path, img_idx, labels):
     img_folder = datasets.ImageFolder(root=testset_path)
     img_path = img_folder.imgs[img_idx][0]
     pil_img = img_folder.loader(img_path)
@@ -51,8 +52,11 @@ def get_question_image(testset_path, img_idx):
     # preprocessing
     img_prep_torch = transform()(pil_img)
     img_prep_torch = img_prep_torch.unsqueeze(0)
-    
-    return img_org_np, img_prep_torch, img_name
+    # extract correct class
+    class_idx_true_str = img_path.split("\\")[-2]
+    img_label_true = labels[class_idx_true_str][1]
+
+    return img_org_np, img_prep_torch, img_name, img_label_true
 
 
 def get_questionaires(path):
@@ -60,4 +64,15 @@ def get_questionaires(path):
         questionaires_list = pickle.load(f)
     
     return questionaires_list
+
+
+def get_figure_from_img_array(image_np, title):
+    plt.imshow(image_np)
+    plt.axis("off")
+    plt.title(title)
+    plt.tight_layout()
+    fig = plt.gcf()
+    plt.close()
+
+    return fig
             
