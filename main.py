@@ -3,14 +3,14 @@ import models
 import argparse
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
+
 
 
 # TODO gradcam
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--VGG', type=bool, default=True)
+    parser.add_argument('--VGG', type=bool, default=False)
     parser.add_argument('--AlexNet', type=bool, default=True)
     parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
