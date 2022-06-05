@@ -6,6 +6,7 @@ import cv2
 import matplotlib.pyplot as plt
 import os
 import torch
+from datetime import datetime
 
 
 # TODO gradcam
@@ -64,13 +65,17 @@ def main():
     
     # load questionaire_list from .json or .pickle
     questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
-    if not os.path.exists("/questionaire_forms/"):
-            os.mkdir("/questionaire_forms/")
+    
+    current_dir = os.getcwd()
+    folder_path = os.path.join(current_dir, f"questionaire_forms_{datetime.now().strftime('%d-%m_%H-%M')}")
+    if not os.path.exists(folder_path):
+            os.mkdir(folder_path)
     
     for idx, questionaire in enumerate(questionaires_list):
-        folder_path = f"/questionaire_forms/questionaire_{idx+1}"
-        if not os.path.exists(folder_path):
-            os.mkdir(folder_path)
+        sub_folder_path = os.path.join(folder_path, f"questionaire_{idx+1}")
+        if not os.path.exists(sub_folder_path):
+            os.mkdir(sub_folder_path)
+
         # create questionaire_n subfolders
         for qu_idx, question in enumerate(questionaire):
             print(question)
@@ -98,10 +103,8 @@ def main():
 
             if xai_used == "gradCAM":
                 fig_explanation = gradcam.explain(model_used.model, img_prep_torch, img_org_np)
-                print(fig_explanation)
             elif xai_used == "LRP":
                 fig_explanation = LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name)
-                print(fig_explanation)
             elif xai_used == "LIME":
                 lime_ex = lime.LIMEExplainer(model_used)
                 fig_explanation = lime_ex.explain(img_org_np)
@@ -113,10 +116,13 @@ def main():
             elif xai_used == "ConfidenceScores":
                 fig_explanation = confidence_scores.explain(model_used, img_prep_torch, labels, 3)
             
-            # save explanation for current question in appropriate questionaire folder
-            fig_explanation.savefig(f"{folder_path}/{qu_idx+1}_{model_name_used}_{bool_used}_{xai_used}_{img_name}")
+            
+            # save explanation and original image for current question in appropriate questionaire folder
+            fig_explanation.savefig(os.path.join(sub_folder_path, f"{qu_idx+1}_{model_name_used}_{bool_used}_{xai_used}_{img_name}"))
+            
             fig_org = data_handler.get_figure_from_img_array(img_org_np[0], f"True class: {img_true_label_str}")
-            fig_org.savefig(f"{folder_path}/{qu_idx+1}_org_{img_name}")
+            fig_org.savefig(os.path.join(sub_folder_path, f"{qu_idx+1}_org_{img_name}"))
+            
 
             
 

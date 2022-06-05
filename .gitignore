@@ -9,5 +9,4 @@
 /Contrastive-Explanations-master/
 /constrastive_explaination_prototype/
 *.pyc
-*.pyc
-*.pyc
+!questionaire_forms/*/*.jpeg
