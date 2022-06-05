@@ -8,3 +8,5 @@ results/gradCam/sealions_on_the_beach_vgg.jpg
 results/gradCam/sealion_vgg.jpg
 results/gradCam/lion_vgg.jpg
 results/LRP/lion_vgg.jpg
+data2/imagenetv2-matched-frequency-format-val/
+results/
