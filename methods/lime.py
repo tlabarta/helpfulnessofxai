@@ -56,7 +56,7 @@ class LIMEExplainer():
         ind =  explanation.top_labels[0]
         dict_heatmap = dict(explanation.local_exp[ind])
         heatmap = np.vectorize(dict_heatmap.get)(explanation.segments) 
-        plt.imshow(heatmap, cmap = 'RdBu')
+        plt.imshow(heatmap, cmap = 'RdBu',  vmin  = -heatmap.max(), vmax = heatmap.max())
         plt.axis('off')
         fig = plt.gcf()
         plt.close()
