@@ -32,11 +32,18 @@ class LIMEExplainer():
 
         temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5, hide_rest=True)
         
+        # heatmap
+        ind =  explanation.top_labels[0]
+        dict_heatmap = dict(explanation.local_exp[ind])
+        heatmap = np.vectorize(dict_heatmap.get)(explanation.segments) 
+
         filename = os.path.splitext(file)[0]
         filename = filename + "_" + self.model.name + ".png"
         output_path = "./results/LIME/" + filename
         
-        plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
+        
+        plt.imshow(heatmap, cmap = 'RdBu')
+        plt.colorbar()
         plt.savefig(output_path)
 
 

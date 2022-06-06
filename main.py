@@ -54,7 +54,7 @@ def main():
             # ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{img_name}")
            
             lime_ex = lime.LIMEExplainer(model)
-            lime_ex.explain(img, files[i])
+            lime_ex.explain(img, files[1])
 
 
 if __name__ == '__main__' :
