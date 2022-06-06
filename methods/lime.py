@@ -9,7 +9,7 @@ from lime import lime_image
 from skimage.segmentation import mark_boundaries
 from methods import data_handler
 import os
-
+from models import AlexNet
 
 # explanation
 
@@ -40,7 +40,9 @@ class LIMEExplainer():
 
 
     def explain(self, img_org):
-
+        org_img = np.array(cv2.imread("./data/images/" + file))
+        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
+        org_img = org_img / 255.0
         explainer = lime_image.LimeImageExplainer()
         explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5,
                                                  hide_color=0, num_samples=1000)
@@ -49,6 +51,12 @@ class LIMEExplainer():
                                                     hide_rest=True)
 
         plt.imshow(mark_boundaries(temp, mask)) # / 2 + 0.5
+
+        # heatmap 
+        ind =  explanation.top_labels[0]
+        dict_heatmap = dict(explanation.local_exp[ind])
+        heatmap = np.vectorize(dict_heatmap.get)(explanation.segments) 
+        plt.imshow(heatmap, cmap = 'RdBu')
         plt.axis('off')
         fig = plt.gcf()
         plt.close()
@@ -79,5 +87,4 @@ class LIMEExplainer():
         ])
 
         return transf
-
 
