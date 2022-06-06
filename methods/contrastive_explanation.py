@@ -1,5 +1,3 @@
-
-
 import torch
 import torch.nn.functional as F
 from torch.autograd import Variable
@@ -11,7 +9,9 @@ from utils.utils_contrastive_explanation import visualize_cam
 from torchvision.utils import save_image
 
 # If you have added your own network extraction in utils.py, please import it below
-from utils.utils_contrastive_explanation import find_alexnet_layer, find_vgg_layer, find_resnet_layer, find_densenet_layer, find_squeezenet_layer, find_resnet18_layer
+from utils.utils_contrastive_explanation import find_alexnet_layer, find_vgg_layer, find_resnet_layer, \
+    find_densenet_layer, find_squeezenet_layer, find_resnet18_layer
+
 
 class GradCAM(object):
     """Calculate GradCAM salinecy map.
@@ -39,6 +39,7 @@ class GradCAM(object):
         model_dict (dict): a dictionary that contains 'model_type', 'arch', layer_name', 'input_size'(optional) as keys.
         verbose (bool): whether to print output size of the saliency map givien 'layer_name' and 'input_size' in model_dict.
     """
+
     def __init__(self, model_dict, verbose=False):
         model_type = model_dict['type']
         layer_name = model_dict['layer_name']
@@ -46,9 +47,11 @@ class GradCAM(object):
 
         self.gradients = dict()
         self.activations = dict()
+
         def backward_hook(module, grad_input, grad_output):
             self.gradients['value'] = grad_output[0]
             return None
+
         def forward_hook(module, input, output):
             self.activations['value'] = output
             return None
@@ -80,7 +83,6 @@ class GradCAM(object):
                 self.model_arch(torch.zeros(1, 3, *(input_size), device=device))
                 print('saliency_map size :', self.activations['value'].shape[2:])
 
-
     def forward(self, input, class_idx=None, retain_graph=False):
         """
         Args:
@@ -107,10 +109,10 @@ class GradCAM(object):
         b, k, u, v = gradients.size()
 
         alpha = gradients.view(b, k, -1).mean(2)
-        #alpha = F.relu(gradients.view(b, k, -1)).mean(2)
+        # alpha = F.relu(gradients.view(b, k, -1)).mean(2)
         weights = alpha.view(b, k, 1, 1)
 
-        saliency_map = (weights*activations).sum(1, keepdim=True)
+        saliency_map = (weights * activations).sum(1, keepdim=True)
         saliency_map = F.relu(saliency_map)
         saliency_map = F.upsample(saliency_map, size=(h, w), mode='bilinear', align_corners=False)
         saliency_map_min, saliency_map_max = saliency_map.min(), saliency_map.max()
@@ -120,6 +122,7 @@ class GradCAM(object):
 
     def __call__(self, input, class_idx=None, retain_graph=False):
         return self.forward(input, class_idx, retain_graph)
+
 
 class Contrast(object):
     """Calculate GradCAM salinecy map.
@@ -210,7 +213,7 @@ class Contrast(object):
         # The only change to Grad-CAM code
         ce_loss = nn.CrossEntropyLoss()
         im_label_as_var = Variable(torch.from_numpy(np.asarray([Q])))
-        pred_loss = ce_loss(logit, im_label_as_var.long()) # .long() hinzugefügt
+        pred_loss = ce_loss(logit, im_label_as_var.long())  # .long() hinzugefügt
 
         self.model_arch.zero_grad()
         pred_loss.backward()
@@ -237,7 +240,7 @@ class Contrast(object):
 class ContrastiveExplainer():
 
     def __init__(self, model_dict):
-        #self.vgg_gradcam = GradCAM(vgg_model_dict, False)
+        # self.vgg_gradcam = GradCAM(vgg_model_dict, False)
         self.contrast = Contrast(model_dict)
 
     def explain(self, img, preprocessed_img, contrast_class_idx, output_path):
@@ -247,9 +250,9 @@ class ContrastiveExplainer():
 
         torch_img = torch.from_numpy(img).permute(2, 0, 1).unsqueeze(0).float().div(255)
         torch_img = F.upsample(torch_img, size=(224, 224), mode='bilinear', align_corners=False)
-        
+
         # Your choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
-        mask_contrast, _ = self.contrast(preprocessed_img, contrast_class_idx)  
+        mask_contrast, _ = self.contrast(preprocessed_img, contrast_class_idx)
         heatmap_contrast, result_contrast = visualize_cam(mask_contrast, torch_img)
         save_image(result_contrast, output_path)
 
