@@ -9,6 +9,7 @@ from lime import lime_image
 from skimage.segmentation import mark_boundaries
 from methods import data_handler
 import os
+from copy import deepcopy
 
 
 # explanation
@@ -18,42 +19,42 @@ class LIMEExplainer():
     def __init__(self, model, ):
         self.model = model
 
-    # def explain(self, img, file):
-    #     # load picture
-    #     org_img = np.array(cv2.imread("./data/images/" + file))
-    #     org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC))
-    #     org_img = org_img / 255.0
+    # def explain(self, img_org):
 
     #     explainer = lime_image.LimeImageExplainer()
-    #     explanation = explainer.explain_instance(org_img.reshape(224, 224, 3), self.batch_predict, top_labels=5,
+    #     explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5,
     #                                              hide_color=0, num_samples=1000)
 
     #     temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
     #                                                 hide_rest=True)
 
-    #     filename = os.path.splitext(file)[0]
-    #     filename = filename + "_" + self.model.name + ".png"
-    #     output_path = "./results/LIME/" + filename
-
-    #     plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
-    #     plt.savefig(output_path)
-
+    #     plt.imshow(mark_boundaries(temp / 2 + 0.5, mask)) 
+    #     plt.axis('off')
+    #     fig = plt.gcf()
+    #     plt.close()
+        
+    #     return fig 
 
     def explain(self, img_org):
-
+  
         explainer = lime_image.LimeImageExplainer()
-        explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5,
-                                                 hide_color=0, num_samples=1000)
+        explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5, hide_color=0, num_samples=1000)
 
-        temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
-                                                    hide_rest=True)
-
-        plt.imshow(mark_boundaries(temp, mask)) # / 2 + 0.5
-        plt.axis('off')
+        temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5, hide_rest=True)
+        
+        # heatmap
+        ind =  explanation.top_labels[0]
+        dict_heatmap = dict(explanation.local_exp[ind])
+        heatmap = np.vectorize(dict_heatmap.get)(explanation.segments) 
+        
+        plt.imshow(heatmap, cmap = 'RdBu')
+        plt.colorbar()
+        plt.axis("off")
         fig = plt.gcf()
         plt.close()
-        
-        return fig 
+
+        return fig
+
 
 
     def batch_predict(self, imgs):
@@ -70,6 +71,7 @@ class LIMEExplainer():
 
         return probs.detach().numpy()
 
+
     def get_preprocess_transform(self):
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                          std=[0.229, 0.224, 0.225])
@@ -79,5 +81,4 @@ class LIMEExplainer():
         ])
 
         return transf
-
 
