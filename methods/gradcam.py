@@ -6,6 +6,7 @@ import numpy as np
 import torchvision.transforms as transforms
 import os
 import matplotlib.pyplot as plt
+import cmapy
 
 def explain(model, img, org_img):
 
@@ -16,9 +17,10 @@ def explain(model, img, org_img):
 
     cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False)  # use_cuda=args.use_cuda
     grayscale_cam = cam(input_tensor=img, targets=None, aug_smooth=True, eigen_smooth=True)[0, :]
-    visualization = show_cam_on_image(org_img, grayscale_cam, use_rgb=True, colormap=cv2.COLORMAP_JET)  #
+    visualization = show_cam_on_image(org_img, grayscale_cam, use_rgb=True, colormap=cmapy.cmap("Reds"))  #
     plt.imshow(visualization[0])
     plt.axis('off')
+    #plt.show()
     fig = plt.gcf()
     plt.close()
 

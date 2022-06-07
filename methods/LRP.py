@@ -19,7 +19,7 @@ Adjustments to the code are marked
 # Visualizing data
 # --------------------------------------
 #modified for easier saving
-def heatmap(R, sx, sy,name=None,save=False):
+def heatmap(R, sx, sy,img,name=None,save=False):
     b = 10 * ((np.abs(R) ** 3.0).mean() ** (1.0 / 3))
 
     from matplotlib.colors import ListedColormap
@@ -35,9 +35,14 @@ def heatmap(R, sx, sy,name=None,save=False):
     # if save :
     #     name = "results/LRP/" + name +".jpg"
         #plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
+    img = img.squeeze()
+    img = torch.permute(img,[1,2,0])
+    img = np.matmul(img[...,:3], [0.299, 0.587, 0.114])
+    img = img[:, :, np.newaxis]
 
     plt.imshow(R, cmap=my_cmap, vmin=-b, vmax=b)
-    cbar = plt.colorbar(orientation="horizontal",shrink=0.75,ticks=[-1,0,1])
+    cbar = plt.colorbar(orientation="horizontal", shrink=0.75, ticks=[-1, 0, 1])
+    plt.imshow(img, cmap='gray',interpolation='None',alpha=0.15)
     cbar.ax.set_xticklabels(["least relevant","","most relevant"])
     #plt.show()
 
@@ -194,6 +199,6 @@ def explain(model,img,file,model_str, save=True):
     R[0] = (A[0] * c + lb * cp + hb * cm).data
 
     if model_str == "alexnet":
-        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5,img,name, save)
     else:
-        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5,img)
