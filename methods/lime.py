@@ -12,28 +12,12 @@ import os
 from copy import deepcopy
 
 
-# explanation
-
 class LIMEExplainer():
+
 
     def __init__(self, model, ):
         self.model = model
 
-    # def explain(self, img_org):
-
-    #     explainer = lime_image.LimeImageExplainer()
-    #     explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5,
-    #                                              hide_color=0, num_samples=1000)
-
-    #     temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
-    #                                                 hide_rest=True)
-
-    #     plt.imshow(mark_boundaries(temp / 2 + 0.5, mask)) 
-    #     plt.axis('off')
-    #     fig = plt.gcf()
-    #     plt.close()
-        
-    #     return fig 
 
     def explain(self, img_org):
   
@@ -47,14 +31,13 @@ class LIMEExplainer():
         dict_heatmap = dict(explanation.local_exp[ind])
         heatmap = np.vectorize(dict_heatmap.get)(explanation.segments) 
         
-        plt.imshow(heatmap, cmap = 'RdBu')
+        plt.imshow(heatmap, cmap = 'bwr')
         plt.colorbar()
         plt.axis("off")
         fig = plt.gcf()
         plt.close()
 
         return fig
-
 
 
     def batch_predict(self, imgs):

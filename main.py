@@ -91,16 +91,6 @@ def main():
                 img_idx, 
                 labels)
 
-            # only for testing purposes
-            # print(img_prep_torch)
-            # output = model_used(img_prep_torch)
-            # probabilities = torch.nn.functional.softmax(output[0], dim=0)
-            # print(probabilities.argmax(), probabilities.max())
-            # print(img_name)
-            # if xai_used != "ConfidenceScores":
-            #     continue
-
-
             if xai_used == "gradCAM":
                 fig_explanation = gradcam.explain(model_used.model, img_prep_torch, img_org_np)
             elif xai_used == "LRP":
@@ -112,7 +102,7 @@ def main():
                 fig_explanation = SHAP.explain(model_used.model, img_prep_torch, img_org_np, img_name, labels, model_used.name)
             elif xai_used == "IntegratedGradients":
                 ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
-                fig_explanation = ige.explain(img_prep_torch, img_name)
+                fig_explanation = ige.explain(img_prep_torch)
             elif xai_used == "ConfidenceScores":
                 fig_explanation = confidence_scores.explain(model_used, img_prep_torch, labels, 3)
             
@@ -122,8 +112,6 @@ def main():
             
             fig_org = data_handler.get_figure_from_img_array(img_org_np[0], f"True class: {img_true_label_str}")
             fig_org.savefig(os.path.join(sub_folder_path, f"{qu_idx+1}_org_{img_name}"))
-            
-
             
 
 if __name__ == '__main__' :
