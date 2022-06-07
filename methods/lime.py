@@ -36,18 +36,29 @@ class LIMEExplainer():
     #     return fig 
 
     def explain(self, img_org):
-  
+        
         explainer = lime_image.LimeImageExplainer()
         explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5, hide_color=0, num_samples=1000)
 
-        temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5, hide_rest=True)
-        
+        #temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=5, hide_rest=True)
+        img = Image.open(img_org).convert('L')
+        img.putalpha(50)
+
+        # resize image 
+        new_width = 224
+        new_height = 224
+        img = img.resize((new_width, new_height), Image.ANTIALIAS)
+
         # heatmap
         ind =  explanation.top_labels[0]
-        dict_heatmap = dict(explanation.local_exp[ind])
+        dict_heatmap = dict(explanation.local_exp[ind], positive_only = False)
         heatmap = np.vectorize(dict_heatmap.get)(explanation.segments) 
-        
-        plt.imshow(heatmap, cmap = 'bwr', vmin  = -heatmap.max(), vmax = heatmap.max())
+
+        fig , axes = plt.subplots()
+        axes.imshow(heatmap, cmap = 'bwr',  vmin  = -heatmap.max(), vmax = heatmap.max())
+        axes.imshow(img, cmap = 'gray', vmin = 0, vmax = 255)
+
+        # plt.imshow(heatmap, cmap = 'bwr', vmin  = -heatmap.max(), vmax = heatmap.max())
         plt.colorbar()
         plt.axis("off")
         fig = plt.gcf()
