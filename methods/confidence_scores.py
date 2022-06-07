@@ -38,7 +38,8 @@ def explain(model, img_pre_torch, labels, k, i=0):
     sorted_predicted_labels = ["1st most probable class\n (the predicted class)", "2nd most probable class", "3rd most probable class"]
     
     # plot & save scores
-    plt.barh(sorted_predicted_labels[::-1], sorted_confidence_scores[::-1], height=0.5)
+    plt.barh(sorted_predicted_labels[::-1], sorted_confidence_scores[::-1]*100, height=0.5)
+    plt.xlabel("Confidence of the model for the given classes in %")
     plt.yticks(fontsize=20)
     plt.tight_layout()
     fig = plt.gcf()

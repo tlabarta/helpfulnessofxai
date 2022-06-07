@@ -24,13 +24,12 @@ def main():
     parser.add_argument('--img_folder', type=str, default='./data/')
     args = parser.parse_args()
 
-
     # define models
     models_list = []
-    if args.VGG :
+    if args.VGG:
         vgg = models.Vgg16()
         models_list.append(vgg)
-    if args.AlexNet :
+    if args.AlexNet:
         alex = models.AlexNet()
         models_list.append(alex)
 
@@ -42,29 +41,27 @@ def main():
 
     """
     for i in range(args.num_images):
-         img, _ = next(data)
+        img, _ = next(data)
 
-         org_img = np.array(cv2.imread(args.img_folder+"images/"+files[i]))
-         org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC), dtype=np.float32)
-         org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
+        org_img = np.array(cv2.imread(args.img_folder + "images/" + files[i]))
+        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC), dtype=np.float32)
+        org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
 
-         for model in models_list:
+        for model in models_list:
+            # LRP.explain(model.model,img, files[i], model.name)
+            gradcam.explain(model.model, img, org_img)
+            # SHAP.explain(model.model, img, org_img, files[i], labels, model.name)
 
-             LRP.explain(model.model,img, files[i], model.name)
-             #gradcam.explain(model.model,img,org_img,files[i],model.name)
-             #SHAP.explain(model.model, img, org_img, files[i], labels, model.name)
+            # model_dict = dict(type=model.name, arch=model.model, layer_name=model.ce_layer_name, input_size=(224, 224))
+            # ce = contrastive_explanation.ContrastiveExplainer(model_dict)
+            # # Choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
+            # ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{files[i]}")
 
-             #model_dict = dict(type=model.name, arch=model.model, layer_name=model.ce_layer_name, input_size=(224, 224))
-             #ce = contrastive_explanation.ContrastiveExplainer(model_dict)
-             # # Choice of contrast; The Q in `Why P, rather than Q?'. Class 130 is flamingo
-             #ce.explain(org_img, img, 130, f"./results/ContrastiveExplanation/{model.name}_{files[i]}")
+            # TODO Adjust this a bit so we dont initilize the model eight times only two
+            # lime_ex = lime.LIMEExplainer(model)
+            # lime_ex.explain(img, files[i])
 
-
-             #TODO Adjust this a bit so we dont initilize the model eight times only two
-             #lime_ex = lime.LIMEExplainer(model)
-             #lime_ex.explain(img, files[i])
     """
-
     # load questionaire_list from .json or .pickle
     questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
     
@@ -88,6 +85,7 @@ def main():
             img_idx, model_name_used, xai_used, bool_used  = question
             model_used = models.Vgg16() if model_name_used == "vgg" else models.AlexNet()
             model_used.train()
+
             img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
                 r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val',
                 img_idx,
@@ -115,5 +113,7 @@ def main():
             fig_org = data_handler.get_figure_from_img_array(img_org_np[0], f"True class: {img_true_label_str}")
             fig_org.savefig(os.path.join(sub_folder_path, f"{qu_idx+1}_org_{img_name}"))
 
-if __name__ == '__main__' :
+
+
+if __name__ == '__main__':
     main()
