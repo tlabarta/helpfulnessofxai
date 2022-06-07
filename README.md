@@ -1,5 +1,10 @@
 # Development
 
+## Useful Links:
+https://www.youtube.com/watch?v=OZJ1IgSgP9E&list=PLV8yxwGOxvvovp-j6ztxhF3QcKXT6vORU
+https://www.youtube.com/watch?v=9haIOplEIGM
+https://www.youtube.com/watch?v=9haIOplEIGM
+
 ## Installation
 create virtual enviromnent
 ```

@@ -23,20 +23,29 @@ def heatmap(R, sx, sy,name=None,save=False):
     b = 10 * ((np.abs(R) ** 3.0).mean() ** (1.0 / 3))
 
     from matplotlib.colors import ListedColormap
-    my_cmap = plt.cm.seismic(np.arange(plt.cm.seismic.N))
+    my_cmap = plt.cm.bwr(np.arange(plt.cm.bwr.N))
     my_cmap[:, 0:3] *= 0.85
     my_cmap = ListedColormap(my_cmap)
+
     plt.figure(figsize=(sx, sy))
     plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
     plt.axis('off')
 
-
     #modified
-    if save :
-        name = "results/LRP/" + name +".jpg"
-        plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
+    # if save :
+    #     name = "results/LRP/" + name +".jpg"
+        #plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
 
+    plt.imshow(R, cmap=my_cmap, vmin=-b, vmax=b)
+    cbar = plt.colorbar(orientation="horizontal",shrink=0.75,ticks=[-1,0,1])
+    cbar.ax.set_xticklabels(["least relevant","","most relevant"])
+    #plt.show()
+
+    # plt.close()
+    fig = plt.gcf()
     plt.close()
+    
+    return fig
 
 
 # --------------------------------------------------------------
@@ -166,10 +175,11 @@ def explain(model,img,file,model_str, save=True):
     name = name + "_" + model_str
     for i, l in enumerate(layers_map):
         if l == layers_map[-1] and model_str=="vgg":
-            heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
+            #heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
+            pass
         else:
-            heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
-
+            #heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
+            pass
     A[0] = A[0].data.requires_grad_(True)
 
     lb = (A[0].data * 0 + (0 - mean) / std).requires_grad_(True)
@@ -184,6 +194,6 @@ def explain(model,img,file,model_str, save=True):
     R[0] = (A[0] * c + lb * cp + hb * cm).data
 
     if model_str == "alexnet":
-        heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, name, save)
     else:
-        heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5)

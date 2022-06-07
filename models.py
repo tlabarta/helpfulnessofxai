@@ -25,6 +25,9 @@ class Vgg16:
         predictions = self.model(img)
         return predictions
 
+    def __call__(self, x): 
+        return self.predict(x)
+
 
 class AlexNet:
 
@@ -41,8 +44,11 @@ class AlexNet:
 
     def train(self):
         self.model.eval()
-        return self.model
+        # return self.model
 
     def predict(self, img):
         predictions = self.model(img)
         return predictions
+
+    def __call__(self, x): 
+        return self.predict(x)
