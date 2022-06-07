@@ -3,10 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import shap
 
-def explain(model, img, org_img, files, labels, model_str):
+def explain(model, img, org_img, img_name, labels, model_str):
 
-    name = os.path.splitext(files)[0]
-    name = name + "_" + model_str
+    name = img_name + "_" + model_str
 
     explainer = shap.GradientExplainer(model=model, data=img, local_smoothing=0.5)
     shap_values, indexes = explainer.shap_values(X=img, ranked_outputs=1, nsamples=200)
