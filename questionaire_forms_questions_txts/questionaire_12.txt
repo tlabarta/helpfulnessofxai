@@ -1,0 +1,24 @@
+1.) Do you think the AI has recognized the 'chambered nautilus' in this image?
+2.) Do you think the AI has recognized the 'coral reef' in this image?
+3.) Do you think the AI has recognized the 'goose' in this image?
+4.) Do you think the AI has recognized the 'jaguar' in this image?
+5.) Do you think the AI has recognized the 'boathouse' in this image?
+6.) Do you think the AI has recognized the 'water tower' in this image?
+7.) Do you think the AI has recognized the 'custard apple' in this image?
+8.) Do you think the AI has recognized the 'gyromitra' in this image?
+9.) Do you think the AI has recognized the 'Boston bull' in this image?
+10.) Do you think the AI has recognized the 'shopping cart' in this image?
+11.) Do you think the AI has recognized the 'slide rule' in this image?
+12.) Do you think the AI has recognized the 'matchstick' in this image?
+13.) Do you think the AI has recognized the 'binoculars' in this image?
+14.) Do you think the AI has recognized the 'pier' in this image?
+15.) Do you think the AI has recognized the 'barbershop' in this image?
+16.) Do you think the AI has recognized the 'spotlight' in this image?
+17.) Do you think the AI has recognized the 'hammerhead' in this image?
+18.) Do you think the AI has recognized the 'banana' in this image?
+19.) Do you think the AI has recognized the 'grocery store' in this image?
+20.) Do you think the AI has recognized the 'planetarium' in this image?
+21.) Do you think the AI has recognized the 'ambulance' in this image?
+22.) Do you think the AI has recognized the 'bubble' in this image?
+23.) Do you think the AI has recognized the 'mashed potato' in this image?
+24.) Do you think the AI has recognized the 'steam locomotive' in this image?
