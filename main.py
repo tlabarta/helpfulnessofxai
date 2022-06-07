@@ -10,7 +10,7 @@ import cv2
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--VGG', type=bool, default=False)
+    parser.add_argument('--VGG', type=bool, default=True)
     parser.add_argument('--AlexNet', type=bool, default=True)
     parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
