@@ -1,6 +1,12 @@
 /venv/
-results/LRP/lion_alex.jpg
-results/LRP/sealion_alex.jpg
-results/LRP/sealions_on_the_beach_alex.jpg
-results/LRP/sealions_on_the_beach_vgg.jpg
-results/LRP/sealion_vgg.jpg
+.ipynb_checkpoints
+*.jpg
+*.json
+*.jpeg
+*.h5
+/data/imagenetv2-matched-frequency-format-val
+*.png
+/Contrastive-Explanations-master/
+/constrastive_explaination_prototype/
+*.pyc
+!questionaire_forms*/*/*.jpeg
