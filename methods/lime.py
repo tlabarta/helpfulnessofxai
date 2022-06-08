@@ -22,13 +22,16 @@ class LIMEExplainer():
    
 
     def explain(self, img_org):
-        
+
+
         explainer = lime_image.LimeImageExplainer()
         explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5, hide_color=0, num_samples=1000)
 
+        img = Image.fromarray(img_org[0]).convert('L')
+
         #temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=5, hide_rest=True)
         # open the original image and grayscale it 
-        img = Image.open(img_org).convert('L')
+
         # tmake image transparent
         img.putalpha(50)
 

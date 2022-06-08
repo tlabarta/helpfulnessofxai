@@ -14,7 +14,7 @@ import random
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--VGG', type=bool, default=False)
+    parser.add_argument('--VGG', type=bool, default=True)
     parser.add_argument('--AlexNet', type=bool, default=True)
     parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
@@ -89,15 +89,15 @@ def main():
     model_used.train()
 
     img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
-                r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val',
+                r'/Users/tobiaslabarta/Downloads/imagenetv2-matched-frequency-format-val',
                 rand_img_idx,
                 labels)
     
                 
-    # gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_gradCAM_{img_name}"))
-    # LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name).savefig(os.path.join(intro_folder_path, f"intro_LRM_True_gradCAM_{img_name}"))
-    # lime_ex = lime.LIMEExplainer(model_used)
-    # lime_ex.explain(img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_LIME_{img_name}"))
+    gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_gradCAM_{img_name}"))
+    LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name).savefig(os.path.join(intro_folder_path, f"intro_LRM_True_gradCAM_{img_name}"))
+    lime_ex = lime.LIMEExplainer(model_used)
+    lime_ex.explain(img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_LIME_{img_name}"))
     SHAP.explain(model_used.model, img_prep_torch, img_org_np, img_name, labels, model_used.name).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_SHAP_{img_name}"))
     ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
     ige.explain(img_prep_torch).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_IntegratedGradients_{img_name}"))
@@ -132,7 +132,7 @@ def main():
                 lime_ex = lime.LIMEExplainer(model_used)
                 fig_explanation = lime_ex.explain(img_org_np)
             elif xai_used == "SHAP":
-                fig_explanation = SHAP.explain(model_used.model, img_prep_torch, img_org_np, img_name, labels, model_used.name)
+                fig_explanation = SHAP.explain(model_used.model, img_prep_torch, img_org_np, labels)
             elif xai_used == "IntegratedGradients":
                 ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
                 fig_explanation = ige.explain(img_prep_torch)
