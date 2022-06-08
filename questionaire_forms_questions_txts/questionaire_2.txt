@@ -10,15 +10,15 @@
 10.) Do you think the AI has recognized the 'water tower' in this image?
 11.) Do you think the AI has recognized the 'chambered nautilus' in this image?
 12.) Do you think the AI has recognized the 'jaguar' in this image?
-13.) Do you think the AI has recognized the 'king snake' in this image?
+13.) Do you think the AI has recognized the 'football helmet' in this image?
 14.) Do you think the AI has recognized the 'red-breasted merganser' in this image?
-15.) Do you think the AI has recognized the 'drum' in this image?
+15.) Do you think the AI has recognized the 'drumstick' in this image?
 16.) Do you think the AI has recognized the 'basenji' in this image?
 17.) Do you think the AI has recognized the 'hummingbird' in this image?
-18.) Do you think the AI has recognized the 'fire screen' in this image?
+18.) Do you think the AI has recognized the 'flagpole' in this image?
 19.) Do you think the AI has recognized the 'barrel' in this image?
-20.) Do you think the AI has recognized the 'bobsled' in this image?
-21.) Do you think the AI has recognized the 'colobus' in this image?
-22.) Do you think the AI has recognized the 'EntleBucher' in this image?
-23.) Do you think the AI has recognized the 'acorn' in this image?
-24.) Do you think the AI has recognized the 'holster' in this image?
+20.) Do you think the AI has recognized the 'bolo tie' in this image?
+21.) Do you think the AI has recognized the 'printer' in this image?
+22.) Do you think the AI has recognized the 'malamute' in this image?
+23.) Do you think the AI has recognized the 'purse' in this image?
+24.) Do you think the AI has recognized the 'clumber' in this image?

@@ -10,15 +10,15 @@
 10.) Do you think the AI has recognized the 'shopping cart' in this image?
 11.) Do you think the AI has recognized the 'boathouse' in this image?
 12.) Do you think the AI has recognized the 'matchstick' in this image?
-13.) Do you think the AI has recognized the 'hummingbird' in this image?
-14.) Do you think the AI has recognized the 'cleaver' in this image?
-15.) Do you think the AI has recognized the 'red fox' in this image?
+13.) Do you think the AI has recognized the 'banjo' in this image?
+14.) Do you think the AI has recognized the 'electric ray' in this image?
+15.) Do you think the AI has recognized the 'kit fox' in this image?
 16.) Do you think the AI has recognized the 'vase' in this image?
-17.) Do you think the AI has recognized the 'container ship' in this image?
-18.) Do you think the AI has recognized the 'groenendael' in this image?
-19.) Do you think the AI has recognized the 'ping-pong ball' in this image?
-20.) Do you think the AI has recognized the 'trailer truck' in this image?
-21.) Do you think the AI has recognized the 'shield' in this image?
-22.) Do you think the AI has recognized the 'pill bottle' in this image?
-23.) Do you think the AI has recognized the 'passenger car' in this image?
-24.) Do you think the AI has recognized the 'sea cucumber' in this image?
+17.) Do you think the AI has recognized the 'freight car' in this image?
+18.) Do you think the AI has recognized the 'container ship' in this image?
+19.) Do you think the AI has recognized the 'groenendael' in this image?
+20.) Do you think the AI has recognized the 'cliff' in this image?
+21.) Do you think the AI has recognized the 'ping-pong ball' in this image?
+22.) Do you think the AI has recognized the 'jigsaw puzzle' in this image?
+23.) Do you think the AI has recognized the 'diaper' in this image?
+24.) Do you think the AI has recognized the 'acorn squash' in this image?
