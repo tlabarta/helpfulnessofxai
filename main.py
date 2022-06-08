@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import os
 import torch
 from datetime import datetime
+import random
 
 
 # TODO gradcam
@@ -64,12 +65,43 @@ def main():
     """
     # load questionaire_list from .json or .pickle
     questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
-    
+
+    # create root folder for questionaires
     current_dir = os.getcwd()
     folder_path = os.path.join(current_dir, f"questionaire_forms_{datetime.now().strftime('%d-%m_%H-%M')}")
     if not os.path.exists(folder_path):
             os.mkdir(folder_path)
+
+    # create XAI introduction images (on same input, for VGG16)
+    intro_folder_path = os.path.join(folder_path, "introduction")
+    if not os.path.exists(intro_folder_path):
+            os.mkdir(intro_folder_path)
+
+    all_questionaire_imgs_idx = [question[0] for questionaire in questionaires_list for question in questionaire]
+    while True:
+        rand_img_idx = random.randint(0, 10000)
+        if rand_img_idx not in all_questionaire_imgs_idx:
+            break
+
+    model_used = models.Vgg16()
+    model_used.train()
+
+    img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
+                r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val',
+                rand_img_idx,
+                labels)
     
+                
+    # gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_gradCAM_{img_name}"))
+    # LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name).savefig(os.path.join(intro_folder_path, f"intro_LRM_True_gradCAM_{img_name}"))
+    # lime_ex = lime.LIMEExplainer(model_used)
+    # lime_ex.explain(img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_LIME_{img_name}"))
+    SHAP.explain(model_used.model, img_prep_torch, img_org_np, img_name, labels, model_used.name).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_SHAP_{img_name}"))
+    ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
+    ige.explain(img_prep_torch).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_IntegratedGradients_{img_name}"))
+    confidence_scores.explain(model_used, img_prep_torch, labels, 3).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_ConfidenceScores_{img_name}"))
+    
+    # create all questionaires according to questionares_list
     for idx, questionaire in enumerate(questionaires_list):
         sub_folder_path = os.path.join(folder_path, f"questionaire_{idx+1}")
         if not os.path.exists(sub_folder_path):
@@ -77,12 +109,11 @@ def main():
 
         # create questionaire_n subfolders
         for qu_idx, question in enumerate(questionaire):
-            print(question)
-            # (7127, 'vgg', 'LIME', False)
-            # easiest way: xai-methods should return their figure; then save here into appropriate folder
 
             # load image by index
+
             img_idx, model_name_used, xai_used, bool_used  = question
+
             model_used = models.Vgg16() if model_name_used == "vgg" else models.AlexNet()
             model_used.train()
 
@@ -112,6 +143,8 @@ def main():
             
             fig_org = data_handler.get_figure_from_img_array(img_org_np[0], f"True class: {img_true_label_str}")
             fig_org.savefig(os.path.join(sub_folder_path, f"{qu_idx+1}_org_{img_name}"))
+
+
 
 
 
