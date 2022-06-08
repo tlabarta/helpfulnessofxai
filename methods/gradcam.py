@@ -11,11 +11,10 @@ import cmapy
 
 def explain(model, img, org_img):
 
-    org_img = org_img/255
+    org_img = org_img / 255
     # org_img = np.float32(org_img) / 255
     # org_img = np.matmul(org_img[..., :3], [0.299, 0.587, 0.114])
     # org_img = org_img[:, :, np.newaxis]
-    # 
 
     target_layers = [model.features[-1]]
 

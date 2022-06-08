@@ -63,6 +63,8 @@ def main():
             # lime_ex.explain(img, files[i])
 
     """
+
+    
     # load questionaire_list from .json or .pickle
     questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
 
