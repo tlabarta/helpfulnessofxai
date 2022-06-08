@@ -13,11 +13,11 @@ from datetime import datetime
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--VGG', type=bool, default=True)
+    parser.add_argument('--VGG', type=bool, default=False)
     parser.add_argument('--AlexNet', type=bool, default=True)
-    parser.add_argument('--LRP', type=bool, default=True)
+    parser.add_argument('--LRP', type=bool, default=False)
     parser.add_argument('--gradCam', type=bool, default=False)
-    parser.add_argument('--Lime', type=bool, default=False)
+    parser.add_argument('--Lime', type=bool, default=True)
     parser.add_argument('--CEM', type=bool, default=False)
     parser.add_argument('--SHAP', type=bool, default=False)
     parser.add_argument('--num_images', type=int, default=4)

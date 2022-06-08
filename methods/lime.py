@@ -10,7 +10,7 @@ from skimage.segmentation import mark_boundaries
 from methods import data_handler
 import os
 from copy import deepcopy
-
+import lime
 
 # explanation
 
@@ -19,21 +19,7 @@ class LIMEExplainer():
     def __init__(self, model, ):
         self.model = model
 
-    # def explain(self, img_org):
-
-    #     explainer = lime_image.LimeImageExplainer()
-    #     explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5,
-    #                                              hide_color=0, num_samples=1000)
-
-    #     temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5,
-    #                                                 hide_rest=True)
-
-    #     plt.imshow(mark_boundaries(temp / 2 + 0.5, mask)) 
-    #     plt.axis('off')
-    #     fig = plt.gcf()
-    #     plt.close()
-        
-    #     return fig 
+   
 
     def explain(self, img_org):
         
@@ -41,7 +27,9 @@ class LIMEExplainer():
         explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5, hide_color=0, num_samples=1000)
 
         #temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=5, hide_rest=True)
+        # open the original image and grayscale it 
         img = Image.open(img_org).convert('L')
+        # tmake image transparent
         img.putalpha(50)
 
         # resize image 
