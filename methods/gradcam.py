@@ -19,7 +19,7 @@ def explain(model, img, org_img):
     cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False)  # use_cuda=args.use_cuda
     grayscale_cam = cam(input_tensor=img, targets=None, aug_smooth=True, eigen_smooth=True)[0, :]
     visualization = show_cam_on_image(org_img, grayscale_cam, use_rgb=True, colormap=cmapy.cmap("Reds"))  #
-    plt.imshow(visualization[0])
+    plt.imshow(visualization)
     plt.axis('off')
     #plt.show()
     fig = plt.gcf()
