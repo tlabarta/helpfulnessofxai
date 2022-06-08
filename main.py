@@ -120,7 +120,7 @@ def main():
             model_used.train()
 
             img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
-                r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val',
+                r'/Users/tobiaslabarta/Downloads/imagenetv2-matched-frequency-format-val',
                 img_idx,
                 labels)
 
