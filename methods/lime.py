@@ -50,7 +50,7 @@ class LIMEExplainer():
         axes.imshow(img, cmap = 'gray', vmin = 0, vmax = 255)
 
         # plt.imshow(heatmap, cmap = 'bwr', vmin  = -heatmap.max(), vmax = heatmap.max())
-        plt.colorbar()
+  #      plt.colorbar() -> RuntimeError: No mappable was found to use for colorbar creation. First define a mappable such as an image (with imshow) or a contour set (with contourf).
         plt.axis("off")
         fig = plt.gcf()
         plt.close()
