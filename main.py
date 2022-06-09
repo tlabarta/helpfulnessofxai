@@ -40,6 +40,26 @@ def main():
     files.sort()
     labels = data_handler.get_labels()
 
+
+    for img_idx in range(args.num_images):
+
+        img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
+                r'/Users/julianvonklitzing/Documents/GitHub/development/data/images',
+                img_idx,
+                labels)
+
+        for model in models_list:
+            model_used = model
+            path_name = os.path.join(f"intro_gradCAM_{model.name}_{img_name}")
+            gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join("results", path_name))
+            LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name).savefig(os.path.join(intro_folder_path, f"intro_LRM_True_gradCAM_{img_name}"))
+            lime_ex = lime.LIMEExplainer(model_used)
+            lime_ex.explain(img_org_np).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_LIME_{img_name}"))
+            SHAP.explain(model_used.model, img_prep_torch, img_org_np, labels).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_SHAP_{img_name}"))
+            ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
+            ige.explain(img_prep_torch).savefig(os.path.join(intro_folder_path, f"intro_vgg_True_IntegratedGradients_{img_name}"))
+
+
     """
     for i in range(args.num_images):
         img, _ = next(data)
