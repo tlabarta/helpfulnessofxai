@@ -45,4 +45,4 @@ for img_idx in range(4):
         SHAP.explain(model_used.model, img_prep_torch, img_org_np, labels).savefig(os.path.join("introduction", f"intro_SHAP_{model.name}_{img_name}"))
         # ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
         # ige.explain(img_prep_torch).savefig(os.path.join("introduction", f"intro_IntegratedGradients_{model.name}_{img_name}"))
-        confidence_scores.explain(model_used, img_prep_torch, labels, 3).savefig(os.path.join("introduction", f"intro_ConfidenceScores_{model.name}_{img_name}"))
+        #confidence_scores.explain(model_used, img_prep_torch, labels, 3).savefig(os.path.join("introduction", f"intro_ConfidenceScores_{model.name}_{img_name}"))
