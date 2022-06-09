@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 import torch
 
 def explain(model, img_pre_torch, labels, k, i=0):
@@ -37,10 +38,14 @@ def explain(model, img_pre_torch, labels, k, i=0):
     # labels for the questionaire
     sorted_predicted_labels = ["1st most probable class\n (the predicted class)", "2nd most probable class", "3rd most probable class"]
     
-    # plot & save scores
-    plt.barh(sorted_predicted_labels[::-1], sorted_confidence_scores[::-1]*100, height=0.5)
-    plt.xlabel("Confidence of the model for the given classes in %")
-    plt.yticks(fontsize=20)
+
+    plt.figure(figsize=(8, 4))
+    splot=sns.barplot(x=sorted_confidence_scores[::-1]*100,y=sorted_predicted_labels[::-1], color="blue")
+    plt.xlim(0, 100)
+    plt.xlabel("AI's confidence for the given classes \n in %", size=20)
+    plt.yticks(fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.bar_label(splot.containers[0], labels=[f"{round(score, 1)}%" if round(score, 1) >= 0.1 else "smaller than 0.1%" for score in sorted_confidence_scores[::-1]*100], size=13)
     plt.tight_layout()
     fig = plt.gcf()
     plt.close()
