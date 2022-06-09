@@ -38,7 +38,7 @@ def explain(model, img_pre_torch, labels, k):
     confidence_scores = np.vstack((sorted_confidence_scores, sorted_predicted_labels)).T
 
     # labels for the questionaire
-    sorted_predicted_labels = ["1st most probable result\n (the final result)", "2nd most probable result", "3rd most probable result"]
+    sorted_predicted_labels = ["1st most probable result\n (the final AI decision)", "2nd most probable result", "3rd most probable result"]
     
 
     plt.figure(figsize=(8, 4))
