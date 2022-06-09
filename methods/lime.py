@@ -11,6 +11,8 @@ from methods import data_handler
 import os
 from copy import deepcopy
 import lime
+from copy import deepcopy
+
 
 # explanation
 
@@ -23,6 +25,7 @@ class LIMEExplainer():
 
     def explain(self, img_org):
 
+        img_org = deepcopy(img_org)
 
         explainer = lime_image.LimeImageExplainer()
         explanation = explainer.explain_instance(img_org.reshape(224, 224, 3), self.batch_predict, top_labels=5, hide_color=0, num_samples=1000)

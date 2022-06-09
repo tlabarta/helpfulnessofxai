@@ -7,9 +7,12 @@ import torchvision.transforms as transforms
 import os
 import matplotlib.pyplot as plt
 import cmapy
+from copy import deepcopy
 
 
 def explain(model, img, org_img):
+    img = deepcopy(img)
+    org_img = deepcopy(org_img)
 
     org_img = org_img / 255
     # org_img = np.float32(org_img) / 255

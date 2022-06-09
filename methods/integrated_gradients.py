@@ -4,6 +4,7 @@ from captum.attr import NoiseTunnel
 from captum.attr import visualization as viz
 import numpy as np
 import torch
+from copy import deepcopy
 
 
 class IntegratedGradientsExplainer():
@@ -14,6 +15,7 @@ class IntegratedGradientsExplainer():
 
 
     def explain(self, input_tensor):
+        input_tensor = deepcopy(input_tensor)
         output = self.model.predict(input_tensor)
         probabilities = torch.nn.functional.softmax(output[0], dim=0)
         self.out_idx = int(probabilities.detach().numpy().argmax())

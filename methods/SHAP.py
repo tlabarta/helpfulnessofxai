@@ -1,10 +1,12 @@
-import os
 import matplotlib.pyplot as plt
 import numpy as np
 import shap
+from copy import deepcopy
 
 def explain(model, img, org_img, labels):
 
+    img = deepcopy(img)
+    org_img = deepcopy(org_img)
 
     explainer = shap.GradientExplainer(model=model, data=img, local_smoothing=0.5)
     shap_values, indexes = explainer.shap_values(X=img, ranked_outputs=1, nsamples=200)

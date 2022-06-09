@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import torch.nn as nn
 import copy
+from copy import deepcopy
 
 import matplotlib
 from matplotlib import pyplot as plt
@@ -126,7 +127,7 @@ def explain(model,img,file,model_str, save=True):
     :param save: if we want to save the results or not
     :return: None
     """
-    X = img
+    X = deepcopy(img)
 
 
     mean = torch.Tensor([0.485, 0.456, 0.406]).reshape(1, -1, 1, 1)

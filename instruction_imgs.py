@@ -18,10 +18,10 @@ models_list = [Vgg16(), AlexNet()]
 labels = data_handler.get_labels()
 
 
-for img_idx in range(5):
+for img_idx in range(4):
 
     img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
-            r'/Users/julianvonklitzing/Documents/GitHub/development/data/images',
+            r'/Users/tobiaslabarta/Documents/GitHub/development/data/images',
             img_idx,
             labels)
 
@@ -38,11 +38,11 @@ for img_idx in range(5):
         print(f"{img_name}, {model.name}: {label[1]}")
 
 
-        gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join("introduction" , f"intro_gradCAM_{model.name}_{img_name}"))
-        LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name).savefig(os.path.join("introduction", f"intro_LRP_{model.name}_{img_name}"))
-        lime_ex = lime.LIMEExplainer(model_used)
-        lime_ex.explain(img_org_np).savefig(os.path.join("introduction", f"intro_LIME_{model.name}_{img_name}"))
+        # gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join("introduction" , f"intro_gradCAM_{model.name}_{img_name}"))
+        # LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name).savefig(os.path.join("introduction", f"intro_LRP_{model.name}_{img_name}"))
+        # lime_ex = lime.LIMEExplainer(model_used)
+        # lime_ex.explain(img_org_np).savefig(os.path.join("introduction", f"intro_LIME_{model.name}_{img_name}"))
         SHAP.explain(model_used.model, img_prep_torch, img_org_np, labels).savefig(os.path.join("introduction", f"intro_SHAP_{model.name}_{img_name}"))
-        ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
-        ige.explain(img_prep_torch).savefig(os.path.join("introduction", f"intro_IntegratedGradients_{model.name}_{img_name}"))
+        # ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
+        # ige.explain(img_prep_torch).savefig(os.path.join("introduction", f"intro_IntegratedGradients_{model.name}_{img_name}"))
         confidence_scores.explain(model_used, img_prep_torch, labels, 3).savefig(os.path.join("introduction", f"intro_ConfidenceScores_{model.name}_{img_name}"))
