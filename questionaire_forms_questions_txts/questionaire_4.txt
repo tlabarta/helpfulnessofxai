@@ -10,15 +10,15 @@
 10.) Do you think the AI has recognized the 'water tower' in this image?
 11.) Do you think the AI has recognized the 'boathouse' in this image?
 12.) Do you think the AI has recognized the 'coral reef' in this image?
-13.) Do you think the AI has recognized the 'wallaby' in this image?
-14.) Do you think the AI has recognized the 'thimble' in this image?
-15.) Do you think the AI has recognized the 'trifle' in this image?
-16.) Do you think the AI has recognized the 'barrel' in this image?
-17.) Do you think the AI has recognized the 'sax' in this image?
-18.) Do you think the AI has recognized the 'window shade' in this image?
-19.) Do you think the AI has recognized the 'bathtub' in this image?
-20.) Do you think the AI has recognized the 'cliff' in this image?
-21.) Do you think the AI has recognized the 'hyena' in this image?
-22.) Do you think the AI has recognized the 'black-and-tan coonhound' in this image?
-23.) Do you think the AI has recognized the 'toaster' in this image?
-24.) Do you think the AI has recognized the 'jackfruit' in this image?
+13.) Do you think the AI has recognized the 'sea lion' in this image?
+14.) Do you think the AI has recognized the 'sea cucumber' in this image?
+15.) Do you think the AI has recognized the 'wallaby' in this image?
+16.) Do you think the AI has recognized the 'thimble' in this image?
+17.) Do you think the AI has recognized the 'trifle' in this image?
+18.) Do you think the AI has recognized the 'barrel' in this image?
+19.) Do you think the AI has recognized the 'sax' in this image?
+20.) Do you think the AI has recognized the 'window shade' in this image?
+21.) Do you think the AI has recognized the 'bathtub' in this image?
+22.) Do you think the AI has recognized the 'cliff' in this image?
+23.) Do you think the AI has recognized the 'breastplate' in this image?
+24.) Do you think the AI has recognized the 'sea lion' in this image?

@@ -10,15 +10,15 @@
 10.) Do you think the AI has recognized the 'coral reef' in this image?
 11.) Do you think the AI has recognized the 'shopping cart' in this image?
 12.) Do you think the AI has recognized the 'slide rule' in this image?
-13.) Do you think the AI has recognized the 'sewing machine' in this image?
-14.) Do you think the AI has recognized the 'window shade' in this image?
-15.) Do you think the AI has recognized the 'beagle' in this image?
-16.) Do you think the AI has recognized the 'prayer rug' in this image?
-17.) Do you think the AI has recognized the 'minibus' in this image?
-18.) Do you think the AI has recognized the 'sunscreen' in this image?
-19.) Do you think the AI has recognized the 'pitcher' in this image?
-20.) Do you think the AI has recognized the 'sewing machine' in this image?
-21.) Do you think the AI has recognized the 'bucket' in this image?
-22.) Do you think the AI has recognized the 'water jug' in this image?
-23.) Do you think the AI has recognized the 'red-breasted merganser' in this image?
-24.) Do you think the AI has recognized the 'bassoon' in this image?
+13.) Do you think the AI has recognized the 'plane' in this image?
+14.) Do you think the AI has recognized the 'sewing machine' in this image?
+15.) Do you think the AI has recognized the 'buckle' in this image?
+16.) Do you think the AI has recognized the 'water jug' in this image?
+17.) Do you think the AI has recognized the 'red-breasted merganser' in this image?
+18.) Do you think the AI has recognized the 'Polaroid camera' in this image?
+19.) Do you think the AI has recognized the 'police van' in this image?
+20.) Do you think the AI has recognized the 'indigo bunting' in this image?
+21.) Do you think the AI has recognized the 'mitten' in this image?
+22.) Do you think the AI has recognized the 'shovel' in this image?
+23.) Do you think the AI has recognized the 'Persian cat' in this image?
+24.) Do you think the AI has recognized the 'wardrobe' in this image?

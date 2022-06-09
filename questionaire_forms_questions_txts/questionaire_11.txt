@@ -10,15 +10,15 @@
 10.) Do you think the AI has recognized the 'Boston bull' in this image?
 11.) Do you think the AI has recognized the 'custard apple' in this image?
 12.) Do you think the AI has recognized the 'slide rule' in this image?
-13.) Do you think the AI has recognized the 'lens cap' in this image?
-14.) Do you think the AI has recognized the 'pirate' in this image?
-15.) Do you think the AI has recognized the 'mobile home' in this image?
-16.) Do you think the AI has recognized the 'bobsled' in this image?
-17.) Do you think the AI has recognized the 'sorrel' in this image?
-18.) Do you think the AI has recognized the 'orange' in this image?
-19.) Do you think the AI has recognized the 'Angora' in this image?
-20.) Do you think the AI has recognized the 'wild boar' in this image?
-21.) Do you think the AI has recognized the 'switch' in this image?
-22.) Do you think the AI has recognized the 'triumphal arch' in this image?
-23.) Do you think the AI has recognized the 'electric ray' in this image?
-24.) Do you think the AI has recognized the 'lacewing' in this image?
+13.) Do you think the AI has recognized the 'ringlet' in this image?
+14.) Do you think the AI has recognized the 'boxer' in this image?
+15.) Do you think the AI has recognized the 'stethoscope' in this image?
+16.) Do you think the AI has recognized the 'valley' in this image?
+17.) Do you think the AI has recognized the 'capuchin' in this image?
+18.) Do you think the AI has recognized the 'dragonfly' in this image?
+19.) Do you think the AI has recognized the 'binoculars' in this image?
+20.) Do you think the AI has recognized the 'sandbar' in this image?
+21.) Do you think the AI has recognized the 'king snake' in this image?
+22.) Do you think the AI has recognized the 'spotlight' in this image?
+23.) Do you think the AI has recognized the 'banana' in this image?
+24.) Do you think the AI has recognized the 'bow tie' in this image?
