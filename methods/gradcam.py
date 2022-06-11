@@ -24,7 +24,7 @@ def explain(model, img, org_img):
     grayscale_cam = cam(input_tensor=img, targets=None, aug_smooth=True, eigen_smooth=True)[0, :]
     visualization = show_cam_on_image(org_img, grayscale_cam, use_rgb=True, colormap=cmapy.cmap("Reds"))
     plt.imshow(visualization)
-    plt.show()
+    #plt.show()
     plt.axis('off')
     fig = plt.gcf()
     plt.close()

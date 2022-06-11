@@ -97,7 +97,7 @@ def main():
             model_used.train()
 
             img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
-                r'/Users/tobiaslabarta/Downloads/imagenetv2-matched-frequency-format-val',
+                r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data2\imagenetv2-matched-frequency-format-val',
                 img_idx,
                 labels)
 

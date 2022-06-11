@@ -57,15 +57,15 @@ def get_question_image(testset_path, img_idx, labels):
     img_path = img_folder.imgs[img_idx][0]
     pil_img = img_folder.loader(img_path)
     img_org_np = np.expand_dims(np.array(pil_img.resize((224, 224))), 0)
-    img_name = img_path.split("/")[-1]
-    #img_name = img_path.split("\\")[-1]
+    #img_name = img_path.split("/")[-1]
+    img_name = img_path.split("\\")[-1]
     print(img_path)
     # preprocessing
     img_prep_torch = transform()(pil_img)
     img_prep_torch = img_prep_torch.unsqueeze(0)
     # extract correct class
-    class_idx_true_str = img_path.split("/")[-2]
-    #class_idx_true_str = img_path.split("\\")[-2]
+    #class_idx_true_str = img_path.split("/")[-2]
+    class_idx_true_str = img_path.split("\\")[-2]
     img_label_true = labels[class_idx_true_str][1]
 
     return img_org_np, img_prep_torch, img_name, img_label_true
