@@ -40,20 +40,22 @@ def main():
     files.sort()
     labels = data_handler.get_labels()
 
-
-
-
     """
     for i in range(args.num_images):
         img, _ = next(data)
 
-        org_img = np.array(cv2.imread(args.img_folder + "images/" + files[i]))
-        org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC), dtype=np.float32)
-        org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
-
+        #org_img = np.array(cv2.imread(args.img_folder + "images/" + files[i]))
+        #org_img = np.asarray(cv2.resize(org_img, (224, 224), interpolation=cv2.INTER_CUBIC), dtype=np.float32)
+        #org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
+    """
+        #img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
+            #r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data2\imagenetv2-matched-frequency-format-val',
+            #1,
+            #labels)
+    """
         for model in models_list:
             # LRP.explain(model.model,img, files[i], model.name)
-            gradcam.explain(model.model, img, org_img)
+            gradcam.explain(model.model, img_prep_torch, img_org_np)
             # SHAP.explain(model.model, img, org_img, files[i], labels, model.name)
 
             # model_dict = dict(type=model.name, arch=model.model, layer_name=model.ce_layer_name, input_size=(224, 224))
