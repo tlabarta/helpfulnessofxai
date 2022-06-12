@@ -23,9 +23,11 @@ def explain(model, img, org_img, labels):
     bwr = LinearSegmentedColormap.from_list("bwr", bwr)
     #######################################################
 
-    shap.image_plot(shap_values=shap_values, pixel_values=org_img.reshape(1, 224, 224, 3)/255, cmap=bwr, labels=labels, show=False)
+    # shap.image_plot(shap_values=shap_values, pixel_values=org_img.reshape(1, 224, 224, 3)/255, cmap=bwr, labels=labels, show=False)
 
     fig = plt.gcf()
     plt.close()
 
-    return fig
+    # return fig
+    return shap_values
+

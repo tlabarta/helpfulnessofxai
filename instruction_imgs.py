@@ -28,13 +28,13 @@ for img_idx in range(4):
     #     model_used = model
         
     # predict
-    output = model.predict(img_prep_torch)
+    output = model_used.predict(img_prep_torch)
     # output has unnormalized scores. To get probabilities, run a softmax on it.
     pred_idx = torch.nn.functional.softmax(output[0], dim=0).detach().numpy().argmax()
     label = labels[str(pred_idx)]
     # must be manually verfied if true, because there are no true labels available for manually
     # downloaded images
-    print(f"{img_name}, {model.name}: {label[1]}")
+    print(f"{img_name}, {model_used.name}: {label[1]}")
 
 
     # gradcam.explain(model_used.model, img_prep_torch, img_org_np).savefig(os.path.join("introduction" , f"intro_gradCAM_{model.name}_{img_name}"))

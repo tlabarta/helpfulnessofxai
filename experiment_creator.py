@@ -8,7 +8,7 @@ import random
 import itertools
 import pickle
 from models import AlexNet, Vgg16
-
+import os
 
 def generate_model_testset_results(model, testset_path):
     """
@@ -25,7 +25,7 @@ def generate_model_testset_results(model, testset_path):
 
     for img_path in tqdm(img_folder.imgs):
         pil_img = img_folder.loader(img_path[0])
-        img_name = img_path[0].split("\\")[-1]
+        img_name = img_path[0].split(os.sep)[-1]
         
         # preprocessing and prediction
         input_tensor = data_handler.transform()(pil_img)
@@ -37,7 +37,7 @@ def generate_model_testset_results(model, testset_path):
         img_names.append(img_name)
         pred_max_confidences.append(probabilities.detach().numpy().max())
         pred_labels_idx.append(probabilities.detach().numpy().argmax())
-        true_labels_idx.append(int(img_path[0].split("\\")[-2]))
+        true_labels_idx.append(int(img_path[0].split(os.sep)[-2]))
         
     df = pd.DataFrame([img_names, pred_max_confidences, pred_labels_idx, true_labels_idx]).transpose()
     df.columns = ["img_name", "max_confidence", "pred_label", "true_label"]
@@ -75,7 +75,6 @@ def get_fixed_img_questionaires(imgs_idx, xai_methods, models):
                 questionaire.append(permutations[i*NUM_IMGS:i*NUM_IMGS+NUM_IMGS][(q+i) - NUM_IMGS])
             else:
                 questionaire.append(permutations[i*NUM_IMGS:i*NUM_IMGS+NUM_IMGS][q+i])
-        random.shuffle(questionaire)
         questionaires_list.append(questionaire)
     
     return questionaires_list
@@ -140,6 +139,12 @@ def save_questionaires(questionaires_list, path):
         pickle.dump(questionaires_list, f)
 
 
+def shuffle_questions(questionaire):
+    for questionaire in questionaire:
+        random.shuffle(questionaire)
+
+
+
 # must only be evaluated if testset hasn't already been evaluated
 models = [Vgg16(), AlexNet()]
 
@@ -150,14 +155,20 @@ models = [Vgg16(), AlexNet()]
 
 
 # create questionaires
-imgs_idx = list(range(10000))
-xai_methods = ['gradCAM', 'LRP', 'SHAP', 'LIME', 'ConfidenceScores', 'IntegratedGradients']
-model_names = ["alex", "vgg"]
-df_vgg = pd.read_pickle("./data2/stats/df_vgg.pickle")
-df_alex = pd.read_pickle("./data2/stats/df_alexnet.pickle")
+# imgs_idx = list(range(10000))
+# xai_methods = ['gradCAM', 'LRP', 'SHAP', 'LIME', 'ConfidenceScores', 'IntegratedGradients']
+# model_names = ["alex", "vgg"]
+# df_vgg = pd.read_pickle("./data2/stats/df_vgg.pickle")
+# df_alex = pd.read_pickle("./data2/stats/df_alexnet.pickle")
 
-questionaires_list = create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=3)
-save_questionaires(questionaires_list, "data2/questionaires.pickle")
+# questionaires_list = create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=3)
+# shuffle_questions(questionaires_list)
+# save_questionaires(questionaires_list, "data2/questionaires_shuffled.pickle")
+
+# additionally shuffle questions in questionairs
+questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
+shuffle_questions(questionaires_list)
+save_questionaires(questionaires_list, "data2/questionaires_shuffled.pickle")
 
 print(questionaires_list)
 print(len(questionaires_list))
