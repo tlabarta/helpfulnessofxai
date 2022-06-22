@@ -1,4 +1,4 @@
-,question_id,qiestionnaire_number,question_number,classification_result,user_decision_yes,user_decision_no,method,model
+,question_id,questionnaire_number,question_number,classification_result,user_decision_yes,user_decision_no,method,model
 0,B101,1,1,,5,5,,
 1,B102,1,2,,5,5,,
 2,B103,1,3,,7,3,,
