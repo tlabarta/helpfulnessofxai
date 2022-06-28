@@ -1,24 +1,24 @@
-[1] ('slide_rule', 'alex', 'IntegratedGradients', True) 
-[2] ('matchstick', 'alex', 'LIME', False) 
-[3] ('water_tower', 'alex', 'LRP', True) 
-[4] ('Boston_bull', 'vgg', 'LRP', True) 
-[5] ('jaguar', 'alex', 'SHAP', False) 
-[6] ('chambered_nautilus', 'vgg', 'LIME', True) 
-[7] ('boathouse', 'vgg', 'IntegratedGradients', False) 
-[8] ('silky_terrier', 'vgg', 'LIME', False) 
-[9] ('cock', 'vgg', 'IntegratedGradients', True) 
-[10] ('stethoscope', 'alex', 'IntegratedGradients', False) 
-[11] ('cash_machine', 'vgg', 'LRP', False) 
-[12] ('shopping_cart', 'vgg', 'ConfidenceScores', True) 
-[13] ('chain', 'vgg', 'ConfidenceScores', False) 
-[14] ('goose', 'alex', 'ConfidenceScores', True) 
-[15] ('cassette_player', 'vgg', 'SHAP', False) 
-[16] ('stage', 'alex', 'LIME', True) 
-[17] ('plane', 'alex', 'gradCAM', False) 
-[18] ('gyromitra', 'vgg', 'SHAP', True) 
-[19] ('Walker_hound', 'vgg', 'gradCAM', False) 
-[20] ('custard_apple', 'vgg', 'gradCAM', True) 
-[21] ('coral_reef', 'alex', 'gradCAM', True) 
-[22] ('black_grouse', 'alex', 'LRP', False) 
-[23] ('steel_arch_bridge', 'alex', 'SHAP', True) 
-[24] ('slot', 'alex', 'ConfidenceScores', False) 
+[1] ('slide_rule', 'alex', 'IntegratedGradients', True); C311
+[2] ('matchstick', 'alex', 'LIME', False); C312
+[3] ('water_tower', 'alex', 'LRP', True); C306
+[4] ('Boston_bull', 'vgg', 'LRP', True); C309
+[5] ('jaguar', 'alex', 'SHAP', False); C304
+[6] ('chambered_nautilus', 'vgg', 'LIME', True); C301 
+[7] ('boathouse', 'vgg', 'IntegratedGradients', False); C305 
+[8] ('silky_terrier', 'vgg', 'LIME', False); C320
+[9] ('cock', 'vgg', 'IntegratedGradients', True); C318
+[10] ('stethoscope', 'alex', 'IntegratedGradients', False);C313
+[11] ('cash_machine', 'vgg', 'LRP', False); C321
+[12] ('shopping_cart', 'vgg', 'ConfidenceScores', True); C310
+[13] ('chain', 'vgg', 'ConfidenceScores', False); C322
+[14] ('goose', 'alex', 'ConfidenceScores', True); C303
+[15] ('cassette_player', 'vgg', 'SHAP', False); C323
+[16] ('stage', 'alex', 'LIME', True); C315
+[17] ('plane', 'alex', 'gradCAM', False); C314
+[18] ('gyromitra', 'vgg', 'SHAP', True); C308
+[19] ('Walker_hound', 'vgg', 'gradCAM', False); C324 
+[20] ('custard_apple', 'vgg', 'gradCAM', True); C307
+[21] ('coral_reef', 'alex', 'gradCAM', True); C302
+[22] ('black_grouse', 'alex', 'LRP', False); C319
+[23] ('steel_arch_bridge', 'alex', 'SHAP', True); C317
+[24] ('slot', 'alex', 'ConfidenceScores', False); C316

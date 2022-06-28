@@ -1,24 +1,24 @@
-[1] ('custard_apple', 'vgg', 'LRP', True) 
-[2] ('Boston_bull', 'vgg', 'SHAP', True) 
-[3] ('toilet_tissue', 'alex', 'IntegratedGradients', False) 
-[4] ('gas_pump', 'vgg', 'ConfidenceScores', False) 
-[5] ('mailbag', 'vgg', 'IntegratedGradients', False) 
-[6] ('American_black_bear', 'alex', 'ConfidenceScores', True) 
-[7] ('white_stork', 'alex', 'LIME', True) 
-[8] ('goose', 'alex', 'IntegratedGradients', True) 
-[9] ('jaguar', 'alex', 'LIME', False) 
-[10] ('lakeside', 'vgg', 'SHAP', False) 
-[11] ('lampshade', 'alex', 'LRP', False) 
-[12] ('matchstick', 'alex', 'ConfidenceScores', False) 
-[13] ('safety_pin', 'vgg', 'LRP', False) 
-[14] ('eggnog', 'alex', 'SHAP', False) 
-[15] ('water_tower', 'alex', 'SHAP', True) 
-[16] ('chambered_nautilus', 'vgg', 'ConfidenceScores', True) 
-[17] ('gyromitra', 'vgg', 'LIME', True) 
-[18] ('slide_rule', 'vgg', 'gradCAM', True) 
-[19] ('coral_reef', 'alex', 'LRP', True) 
-[20] ('junco', 'vgg', 'LIME', False) 
-[21] ('wire-haired_fox_terrier', 'vgg', 'gradCAM', False) 
-[22] ('vine_snake', 'alex', 'gradCAM', True) 
-[23] ('boathouse', 'alex', 'gradCAM', False) 
-[24] ('shopping_cart', 'vgg', 'IntegratedGradients', True) 
+[1] ('custard_apple', 'vgg', 'LRP', True); B108
+[2] ('Boston_bull', 'vgg', 'SHAP', True); B111
+[3] ('toilet_tissue', 'alex', 'IntegratedGradients', False); B118
+[4] ('gas_pump', 'vgg', 'ConfidenceScores', False); B123
+[5] ('mailbag', 'vgg', 'IntegratedGradients', False); B124
+[6] ('American_black_bear', 'alex', 'ConfidenceScores', True); B115
+[7] ('white_stork', 'alex', 'LIME', True); B113
+[8] ('goose', 'alex', 'IntegratedGradients', True); B104 
+[9] ('jaguar', 'alex', 'LIME', False); B110
+[10] ('lakeside', 'vgg', 'SHAP', False); B122
+[11] ('lampshade', 'alex', 'LRP', False); B117
+[12] ('matchstick', 'alex', 'ConfidenceScores', False); B112
+[13] ('safety_pin', 'vgg', 'LRP', False); B121
+[14] ('eggnog', 'alex', 'SHAP', False); B114
+[15] ('water_tower', 'alex', 'SHAP', True); B103
+[16] ('chambered_nautilus', 'vgg', 'ConfidenceScores', True); B105
+[17] ('gyromitra', 'vgg', 'LIME', True); B109
+[18] ('slide_rule', 'vgg', 'gradCAM', True); B106
+[19] ('coral_reef', 'alex', 'LRP', True); B101
+[20] ('junco', 'vgg', 'LIME', False); B120
+[21] ('wire-haired_fox_terrier', 'vgg', 'gradCAM', False); B119
+[22] ('vine_snake', 'alex', 'gradCAM', True); B116
+[23] ('boathouse', 'alex', 'gradCAM', False); B102
+[24] ('shopping_cart', 'vgg', 'IntegratedGradients', True); B107

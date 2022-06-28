@@ -1,24 +1,24 @@
-[1] ('water_tower', 'alex', 'LIME', True) 
-[2] ('boathouse', 'alex', 'LRP', False) 
-[3] ('printer', 'vgg', 'ConfidenceScores', False) 
-[4] ('hummingbird', 'alex', 'ConfidenceScores', True) 
-[5] ('jaguar', 'alex', 'ConfidenceScores', False) 
-[6] ('flagpole', 'vgg', 'SHAP', False) 
-[7] ('gyromitra', 'vgg', 'ConfidenceScores', True) 
-[8] ('football_helmet', 'alex', 'SHAP', False) 
-[9] ('barrel', 'vgg', 'LIME', False) 
-[10] ('purse', 'vgg', 'IntegratedGradients', False) 
-[11] ('slide_rule', 'vgg', 'LRP', True) 
-[12] ('bolo_tie', 'alex', 'LRP', True) 
-[13] ('goose', 'vgg', 'gradCAM', True) 
-[14] ('Boston_bull', 'vgg', 'LIME', True) 
-[15] ('custard_apple', 'vgg', 'SHAP', True) 
-[16] ('coral_reef', 'alex', 'SHAP', True) 
-[17] ('drumstick', 'alex', 'gradCAM', False) 
-[18] ('shopping_cart', 'alex', 'gradCAM', True) 
-[19] ('malamute', 'vgg', 'gradCAM', False) 
-[20] ('clumber', 'vgg', 'LRP', False) 
-[21] ('matchstick', 'alex', 'IntegratedGradients', False) 
-[22] ('chambered_nautilus', 'vgg', 'IntegratedGradients', True) 
-[23] ('basenji', 'alex', 'LIME', False) 
-[24] ('red-breasted_merganser', 'alex', 'IntegratedGradients', True) 
+[1] ('water_tower', 'alex', 'LIME', True); B210
+[2] ('boathouse', 'alex', 'LRP', False); B206
+[3] ('printer', 'vgg', 'ConfidenceScores', False); B221
+[4] ('hummingbird', 'alex', 'ConfidenceScores', True); B217
+[5] ('jaguar', 'alex', 'ConfidenceScores', False); B212
+[6] ('flagpole', 'vgg', 'SHAP', False); B218
+[7] ('gyromitra', 'vgg', 'ConfidenceScores', True); B203
+[8] ('football_helmet', 'alex', 'SHAP', False); B213 
+[9] ('barrel', 'vgg', 'LIME', False); B219 
+[10] ('purse', 'vgg', 'IntegratedGradients', False); B223
+[11] ('slide_rule', 'vgg', 'LRP', True); B208
+[12] ('bolo_tie', 'alex', 'LRP', True); B220
+[13] ('goose', 'vgg', 'gradCAM', True); B207
+[14] ('Boston_bull', 'vgg', 'LIME', True); B209
+[15] ('custard_apple', 'vgg', 'SHAP', True); B205
+[16] ('coral_reef', 'alex', 'SHAP', True); B204
+[17] ('drumstick', 'alex', 'gradCAM', False); B215
+[18] ('shopping_cart', 'alex', 'gradCAM', True); B201
+[19] ('malamute', 'vgg', 'gradCAM', False); B222 
+[20] ('clumber', 'vgg', 'LRP', False); B224
+[21] ('matchstick', 'alex', 'IntegratedGradients', False); B202
+[22] ('chambered_nautilus', 'vgg', 'IntegratedGradients', True); B211
+[23] ('basenji', 'alex', 'LIME', False); B216
+[24] ('red-breasted_merganser', 'alex', 'IntegratedGradients', True); B214
