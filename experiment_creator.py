@@ -1,15 +1,15 @@
 from scipy import rand
 from torchvision import datasets
-import pandas as pd
 from tqdm import tqdm
 import torch
-import data_handler
 import random
 import itertools
 import pickle
-from models import AlexNet, Vgg16
 import os
+import pandas as pd
 
+from models import AlexNet, Vgg16
+import data_handler
 
 def generate_model_testset_results(model, testset_path):
     """
