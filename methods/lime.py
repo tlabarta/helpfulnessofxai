@@ -6,6 +6,7 @@ import torch.nn.functional as F
 from lime import lime_image
 from copy import deepcopy
 from data_handler import transform
+from torchvision import transforms
 
 # explanation
 
@@ -62,8 +63,21 @@ class LIMEExplainer():
         An extra transforming method (additionally to the one defined in data_handler) is needed because
         resizing is only possilbe on Pillow Images and not on numpy arrays.
         """
-        torch_imgs = torch.stack(tuple(transform()(img) for img in imgs), dim=0).float()
+
+        transf = self.get_preprocess_transform()
+        torch_imgs = torch.stack(tuple(transf(img) for img in imgs), dim=0).float()
         logits = self.model.predict(torch_imgs)
         probs = F.softmax(logits, dim=1)
 
         return probs.detach().numpy()
+
+    def get_preprocess_transform(self):
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                         std=[0.229, 0.224, 0.225])
+        transf = transforms.Compose([
+            transforms.ToTensor(),
+            normalize
+        ])
+
+        return transf
+
