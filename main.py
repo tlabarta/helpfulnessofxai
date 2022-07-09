@@ -1,14 +1,8 @@
-from data_handler import *
 from methods import gradcam, LRP, SHAP, lime, integrated_gradients, confidence_scores
 import models
 import argparse
-import numpy as np
-import cv2
-import matplotlib.pyplot as plt
 import os
-import torch
 from datetime import datetime
-import random
 
 
 # TODO gradcam

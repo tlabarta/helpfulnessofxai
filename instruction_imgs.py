@@ -1,15 +1,8 @@
-from methods import data_handler, gradcam, LRP, SHAP, lime, integrated_gradients, confidence_scores
+from methods import SHAP
+from development import data_handler
 from models import AlexNet, Vgg16
-import argparse
-import numpy as np
-import cv2
-import matplotlib.pyplot as plt
 import os
 import torch
-from datetime import datetime
-import random
-
-
 
 # define models
 models_list = [Vgg16(), AlexNet()]

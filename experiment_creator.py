@@ -1,9 +1,8 @@
-from scipy import rand
 from torchvision import datasets
 import pandas as pd
 from tqdm import tqdm
 import torch
-from methods import data_handler
+from development import data_handler
 import random
 import itertools
 import pickle
