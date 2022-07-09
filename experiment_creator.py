@@ -1,8 +1,9 @@
+from scipy import rand
 from torchvision import datasets
 import pandas as pd
 from tqdm import tqdm
 import torch
-from development import data_handler
+from . import data_handler
 import random
 import itertools
 import pickle
@@ -149,25 +150,25 @@ models = [Vgg16(), AlexNet()]
 
 #for model in models:
 #    model.eval()
-#    df = generate_model_testset_results(model, r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val')
-#    df.to_pickle(f"data2/stats/df_{model.name}_2.pickle")
+#    df = generate_model_testset_results(model, r'C:\Users\julia\Dokumente\GitHub\development\data\imagenetv2-matched-frequency-format-val')
+#    df.to_pickle(f"data/stats/df_{model.name}_2.pickle")
 
 
 # create questionaires
 # imgs_idx = list(range(10000))
 # xai_methods = ['gradCAM', 'LRP', 'SHAP', 'LIME', 'ConfidenceScores', 'IntegratedGradients']
 # model_names = ["alex", "vgg"]
-# df_vgg = pd.read_pickle("./data2/stats/df_vgg.pickle")
-# df_alex = pd.read_pickle("./data2/stats/df_alexnet.pickle")
+# df_vgg = pd.read_pickle("./data/stats/df_vgg.pickle")
+# df_alex = pd.read_pickle("./data/stats/df_alexnet.pickle")
 
 # questionaires_list = create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=3)
 # shuffle_questions(questionaires_list)
-# save_questionaires(questionaires_list, "data2/questionaires_shuffled.pickle")
+# save_questionaires(questionaires_list, "data/questionaires_shuffled.pickle")
 
 # additionally shuffle questions in questionairs
-questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
+questionaires_list = data_handler.get_questionaires("data/questionaires.pickle")
 shuffle_questions(questionaires_list)
-save_questionaires(questionaires_list, "data2/questionaires_shuffled.pickle")
+save_questionaires(questionaires_list, "data/questionaires_shuffled.pickle")
 
 print(questionaires_list)
 print(len(questionaires_list))

@@ -44,7 +44,7 @@ def main():
         #org_img = cv2.cvtColor(org_img, cv2.COLOR_BGR2RGB)
     """
         #img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
-            #r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data2\imagenetv2-matched-frequency-format-val',
+            #r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data\imagenetv2-matched-frequency-format-val',
             #1,
             #labels)
     """
@@ -66,7 +66,7 @@ def main():
 
     
     # load questionaire_list from .json or .pickle
-    questionaires_list = data_handler.get_questionaires("data2/questionaires.pickle")
+    questionaires_list = data_handler.get_questionaires("data/questionaires.pickle")
 
     # create root folder for questionaires
     current_dir = os.getcwd()
@@ -92,7 +92,7 @@ def main():
             model_used.eval()
 
             img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
-                r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data2\imagenetv2-matched-frequency-format-val',
+                r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data\imagenetv2-matched-frequency-format-val',
                 img_idx,
                 labels)
 

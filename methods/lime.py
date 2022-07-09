@@ -5,7 +5,7 @@ import torch
 import torch.nn.functional as F
 from lime import lime_image
 from copy import deepcopy
-from development.data_handler import transform
+from data_handler import transform
 
 # explanation
 
