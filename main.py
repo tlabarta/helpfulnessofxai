@@ -94,7 +94,7 @@ def main():
             img_idx, model_name_used, xai_used, bool_used  = question
 
             model_used = models.Vgg16() if model_name_used == "vgg" else models.AlexNet()
-            model_used.train()
+            model_used.eval()
 
             img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(
                 r'C:\Users\rfroe\OneDrive\Documents\Uni\SOSE22\PJ DS\development\data2\imagenetv2-matched-frequency-format-val',

@@ -13,7 +13,7 @@ import random
 
 # define models
 models_list = [Vgg16(), AlexNet()]
-[model.train() for model in models_list]
+[model.eval() for model in models_list]
 
 labels = data_handler.get_labels()
 model_used = models_list[0]

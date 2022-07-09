@@ -149,7 +149,7 @@ def shuffle_questions(questionaire):
 models = [Vgg16(), AlexNet()]
 
 #for model in models:
-#    model.train()
+#    model.eval()
 #    df = generate_model_testset_results(model, r'C:\Users\julia\Dokumente\GitHub\development\data2\imagenetv2-matched-frequency-format-val')
 #    df.to_pickle(f"data2/stats/df_{model.name}_2.pickle")
 

@@ -17,9 +17,8 @@ class Vgg16:
         with open("data/imagenet_class_index.json", "r") as h:
             self.labels = json.load(h)
 
-    def train(self):
+    def eval(self):
         self.model.eval()
-        return self.model
 
     def predict(self, img):
         predictions = self.model(img)
@@ -42,9 +41,8 @@ class AlexNet:
         with open("data/imagenet_class_index.json", "r") as h:
             self.labels = json.load(h)
 
-    def train(self):
+    def eval(self):
         self.model.eval()
-        # return self.model
 
     def predict(self, img):
         predictions = self.model(img)

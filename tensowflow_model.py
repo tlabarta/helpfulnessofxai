@@ -6,7 +6,7 @@ from keras.preprocessing import image
 import numpy as np
 
 # TODO move to a separate class
-def train():
+def eval():
     # basic out-of-the-box Xception cnn implementation, pretrained on imagenet dataset
     # for playing around with it and letting it classify random wikimedia pictures
     model = tf.keras.applications.Xception(
