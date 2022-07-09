@@ -1,4 +1,5 @@
-from methods import data_handler, gradcam, LRP, SHAP, lime, integrated_gradients, confidence_scores
+from data_handler import *
+from methods import gradcam, LRP, SHAP, lime, integrated_gradients, confidence_scores
 import models
 import argparse
 import numpy as np
