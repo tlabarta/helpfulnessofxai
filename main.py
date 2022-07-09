@@ -21,7 +21,7 @@ def main():
     labels = data_handler.get_labels()
 
     # load questionaire_list from .json or .pickle
-    folder = os.path.join(os.path.curdir, "data", "questionaires.pickle")
+    folder = os.path.join(os.path.curdir, "data","question_generation","questionaires.pickle")
     questionaires_list = data_handler.get_questionaires(folder)
 
     # create root folder for questionaires
