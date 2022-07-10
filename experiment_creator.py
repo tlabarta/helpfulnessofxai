@@ -80,7 +80,7 @@ def get_fixed_img_questionnaires(imgs_idx, xai_methods, models):
 
 
 def add_random_unique_images(questionnaires_list, imgs_idx, df_alex, df_vgg, model_names, xai_methods):
-    FINAL_questionnaIRE_SIZE = 24
+    FINAL_QUESTIONNAIRE_SIZE = 24
 
     for idx_qn, questionnaire in enumerate(questionnaires_list):
 
@@ -107,7 +107,7 @@ def add_random_unique_images(questionnaires_list, imgs_idx, df_alex, df_vgg, mod
 
         # add addtional random images to each questionnaire such that for every variant in df_variants_count the 
         # count will be 1
-        while df_variants_count["count"].sum() != FINAL_questionnaIRE_SIZE:
+        while df_variants_count["count"].sum() != FINAL_QUESTIONNAIRE_SIZE:
             rand_img_idx = imgs_idx.pop(random.randint(0, len(imgs_idx) - 1))
 
             alex_pred = df_alex.loc[rand_img_idx]["pred_is_correct"]
