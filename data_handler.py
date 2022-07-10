@@ -70,11 +70,11 @@ def get_question_image(testset_path, img_idx, labels):
     return img_org_np, img_prep_torch, img_name, img_label_true
 
 
-def get_questionaires(path):
+def get_questionnaires(path):
     with open(path,'rb') as f:
-        questionaires_list = pickle.load(f)
+        questionnaires_list = pickle.load(f)
     
-    return questionaires_list
+    return questionnaires_list
 
 
 def get_figure_from_img_array(image_np, title):

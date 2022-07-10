@@ -46,68 +46,68 @@ def generate_model_testset_results(model, testset_path):
     return df
 
 
-def create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=None):
+def create_questionnairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=None):
     """
 
     """
     if seed:
         random.seed(seed)
-    # create first half of question with fixed images for all questionaire forms
-    questionaires_list = get_fixed_img_questionaires(imgs_idx, xai_methods, model_names)
-    # adding images works directly on the reference of 'questionaires_list'
-    add_random_unique_images(questionaires_list, imgs_idx, df_alex, df_vgg, model_names, xai_methods)
+    # create first half of question with fixed images for all questionnaire forms
+    questionnaires_list = get_fixed_img_questionnaires(imgs_idx, xai_methods, model_names)
+    # adding images works directly on the reference of 'questionnaires_list'
+    add_random_unique_images(questionnaires_list, imgs_idx, df_alex, df_vgg, model_names, xai_methods)
 
-    return questionaires_list
+    return questionnaires_list
 
 
-def get_fixed_img_questionaires(imgs_idx, xai_methods, models):
-    NUM_QUESTIONAIRES = 12
+def get_fixed_img_questionnaires(imgs_idx, xai_methods, models):
+    NUM_questionnaIRES = 12
     NUM_IMGS = 12
-    questionaires_list = []
+    questionnaires_list = []
     random_imgs_idx = [imgs_idx.pop(random.randint(0, len(imgs_idx) - 1)) for i in range(NUM_IMGS)]
     permutations = list(itertools.product(random_imgs_idx, models, xai_methods))
-    # distribute permutations on questionaires 
-    for q in range(NUM_QUESTIONAIRES):
-        questionaire = []
+    # distribute permutations on questionnaires 
+    for q in range(NUM_questionnaIRES):
+        questionnaire = []
         for i in range(NUM_IMGS):
             if (q + i) > (NUM_IMGS - 1):
-                questionaire.append(permutations[i * NUM_IMGS:i * NUM_IMGS + NUM_IMGS][(q + i) - NUM_IMGS])
+                questionnaire.append(permutations[i * NUM_IMGS:i * NUM_IMGS + NUM_IMGS][(q + i) - NUM_IMGS])
             else:
-                questionaire.append(permutations[i * NUM_IMGS:i * NUM_IMGS + NUM_IMGS][q + i])
-        questionaires_list.append(questionaire)
+                questionnaire.append(permutations[i * NUM_IMGS:i * NUM_IMGS + NUM_IMGS][q + i])
+        questionnaires_list.append(questionnaire)
 
-    return questionaires_list
+    return questionnaires_list
 
 
-def add_random_unique_images(questionaires_list, imgs_idx, df_alex, df_vgg, model_names, xai_methods):
-    FINAL_QUESTIONAIRE_SIZE = 24
+def add_random_unique_images(questionnaires_list, imgs_idx, df_alex, df_vgg, model_names, xai_methods):
+    FINAL_questionnaIRE_SIZE = 24
 
-    for idx_qn, questionaire in enumerate(questionaires_list):
+    for idx_qn, questionnaire in enumerate(questionnaires_list):
 
         df_variants_count = pd.DataFrame(list(itertools.product(xai_methods, model_names, [True, False]))).groupby(
             [0, 1, 2]).count()
         df_variants_count["count"] = 0
 
         # evaluate variants for the already drawn fixed questions
-        for idx_q, question in enumerate(questionaire):
+        for idx_q, question in enumerate(questionnaire):
             if question[1] == "alex":
                 if df_alex["pred_is_correct"][question[0]]:
-                    questionaires_list[idx_qn][idx_q] += (True,)
+                    questionnaires_list[idx_qn][idx_q] += (True,)
                     df_variants_count.loc[question[2], "alex", True]["count"] += 1
                 else:
-                    questionaires_list[idx_qn][idx_q] += (False,)
+                    questionnaires_list[idx_qn][idx_q] += (False,)
                     df_variants_count.loc[question[2], "alex", False]["count"] += 1
             else:
                 if df_vgg["pred_is_correct"][question[0]]:
-                    questionaires_list[idx_qn][idx_q] += (True,)
+                    questionnaires_list[idx_qn][idx_q] += (True,)
                     df_variants_count.loc[question[2], "vgg", True]["count"] += 1
                 else:
-                    questionaires_list[idx_qn][idx_q] += (False,)
+                    questionnaires_list[idx_qn][idx_q] += (False,)
                     df_variants_count.loc[question[2], "vgg", False]["count"] += 1
 
-        # add addtional random images to each questionaire such that for every variant in df_variants_count the 
+        # add addtional random images to each questionnaire such that for every variant in df_variants_count the 
         # count will be 1
-        while df_variants_count["count"].sum() != FINAL_QUESTIONAIRE_SIZE:
+        while df_variants_count["count"].sum() != FINAL_questionnaIRE_SIZE:
             rand_img_idx = imgs_idx.pop(random.randint(0, len(imgs_idx) - 1))
 
             alex_pred = df_alex.loc[rand_img_idx]["pred_is_correct"]
@@ -122,28 +122,28 @@ def add_random_unique_images(questionaires_list, imgs_idx, df_alex, df_vgg, mode
             if not df_alex_options.empty:
                 rand_variant = df_alex_options.index[random.randint(0, df_alex_options.shape[0] - 1)]
                 question = (rand_img_idx, rand_variant[1], rand_variant[0], rand_variant[2])
-                questionaire.append(question)
+                questionnaire.append(question)
                 df_variants_count.loc[rand_variant]["count"] += 1
 
             elif not df_vgg_options.empty:
                 rand_variant = df_vgg_options.index[random.randint(0, df_vgg_options.shape[0] - 1)]
                 question = (rand_img_idx, rand_variant[1], rand_variant[0], rand_variant[2])
-                questionaire.append(question)
+                questionnaire.append(question)
                 df_variants_count.loc[rand_variant]["count"] += 1
 
 
-def save_questionaires(questionaires_list, path):
+def save_questionnaires(questionnaires_list, path):
     with open(path, 'wb') as f:
-        pickle.dump(questionaires_list, f)
+        pickle.dump(questionnaires_list, f)
 
 
-def shuffle_questions(questionaire):
-    for questionaire in questionaire:
-        random.shuffle(questionaire)
+def shuffle_questions(questionnaire):
+    for questionnaire in questionnaire:
+        random.shuffle(questionnaire)
 
 
 def main():
-    # create questionaires
+    # create questionnaires
     # must only be evaluated if testset hasn't already been evaluated
     folder_vgg = os.path.join(os.path.curdir, "data", "stats", "df_vgg.pickle")
     folder_alex = os.path.join(os.path.curdir, "data", "stats", "df_alexnet.pickle")
@@ -163,19 +163,19 @@ def main():
         df_vgg = pd.read_pickle(folder_vgg)
         df_alex = pd.read_pickle(folder_alex)
 
-        questionaires_list = create_questionairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=3)
-        shuffle_questions(questionaires_list)
-        folder = os.path.join(os.path.curdir, "data", "question_generation", "questionaires_shuffled.pickle")
-        save_questionaires(questionaires_list, folder)
+        questionnaires_list = create_questionnairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=3)
+        shuffle_questions(questionnaires_list)
+        folder = os.path.join(os.path.curdir, "data", "question_generation", "questionnaires_shuffled.pickle")
+        save_questionnaires(questionnaires_list, folder)
 
-    # additionally shuffle questions in questionairs
-    folder = os.path.join(os.path.curdir, "data", "question_generation", "questionaires.pickle")
-    questionaires_list = data_handler.get_questionaires(folder)
+    # additionally shuffle questions in questionnairs
+    folder = os.path.join(os.path.curdir, "data", "question_generation", "questionnaires.pickle")
+    questionnaires_list = data_handler.get_questionnaires(folder)
 
-    shuffle_questions(questionaires_list)
+    shuffle_questions(questionnaires_list)
 
-    folder = os.path.join(os.path.curdir, "data", "question_generation", "questionaires_shuffled.pickle")
-    save_questionaires(questionaires_list, folder)
+    folder = os.path.join(os.path.curdir, "data", "question_generation", "questionnaires_shuffled.pickle")
+    save_questionnaires(questionnaires_list, folder)
 
 
 if __name__ == '__main__':

@@ -20,24 +20,24 @@ def main():
 
     labels = data_handler.get_labels()
 
-    # load questionaire_list from .json or .pickle
-    folder = os.path.join(os.path.curdir, "data","question_generation","questionaires.pickle")
-    questionaires_list = data_handler.get_questionaires(folder)
+    # load questionnaire_list from .json or .pickle
+    folder = os.path.join(os.path.curdir, "data","question_generation","questionnaires.pickle")
+    questionnaires_list = data_handler.get_questionnaires(folder)
 
-    # create root folder for questionaires
+    # create root folder for questionnaires
     current_dir = os.getcwd()
-    folder_path = os.path.join(current_dir, f"questionaire_forms_{datetime.now().strftime('%d-%m_%H-%M')}")
+    folder_path = os.path.join(current_dir, f"questionnaire_forms_{datetime.now().strftime('%d-%m_%H-%M')}")
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
-    # create all questionaires according to questionares_list
-    for idx, questionaire in enumerate(questionaires_list):
-        sub_folder_path = os.path.join(folder_path, f"questionaire_{idx + 1}")
+    # create all questionnaires according to questionnares_list
+    for idx, questionnaire in enumerate(questionnaires_list):
+        sub_folder_path = os.path.join(folder_path, f"questionnaire_{idx + 1}")
         if not os.path.exists(sub_folder_path):
             os.mkdir(sub_folder_path)
 
-        # create questionaire_n subfolders
-        for qu_idx, question in enumerate(questionaire):
+        # create questionnaire_n subfolders
+        for qu_idx, question in enumerate(questionnaire):
 
             # load image by index
             img_idx, model_name_used, xai_used, bool_used = question
@@ -69,7 +69,7 @@ def main():
             elif xai_used == "ConfidenceScores" and args.CS:
                 fig_explanation = confidence_scores.explain(model_used, img_prep_torch, labels, 3)
 
-            # save explanation and original image for current question in appropriate questionaire folder
+            # save explanation and original image for current question in appropriate questionnaire folder
             if fig_explanation:
                 fig_explanation.savefig(
                     os.path.join(sub_folder_path, f"{qu_idx + 1}_{model_name_used}_{bool_used}_{xai_used}_{img_name}"))
