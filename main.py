@@ -21,7 +21,8 @@ def main():
     labels = data_handler.get_labels()
 
     # load questionnaire_list from .json or .pickle
-    folder = os.path.join(os.path.curdir, "data","question_generation","questionnaires.pickle")
+    folder = os.path.join(os.path.curdir, "data", "question_generation", "questionnaires.pickle")
+    #folder = "/data/question_generation/questionnaires.pickle"
     questionnaires_list = data_handler.get_questionnaires(folder)
 
     # create root folder for questionnaires
@@ -30,7 +31,7 @@ def main():
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
-    # create all questionnaires according to questionnares_list
+    # create all questionnaires according to questionnaires_list
     for idx, questionnaire in enumerate(questionnaires_list):
         sub_folder_path = os.path.join(folder_path, f"questionnaire_{idx + 1}")
         if not os.path.exists(sub_folder_path):

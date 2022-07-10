@@ -61,13 +61,13 @@ def create_questionnairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, se
 
 
 def get_fixed_img_questionnaires(imgs_idx, xai_methods, models):
-    NUM_questionnaIRES = 12
+    NUM_QUESTIONNAIRES = 12
     NUM_IMGS = 12
     questionnaires_list = []
     random_imgs_idx = [imgs_idx.pop(random.randint(0, len(imgs_idx) - 1)) for i in range(NUM_IMGS)]
     permutations = list(itertools.product(random_imgs_idx, models, xai_methods))
     # distribute permutations on questionnaires 
-    for q in range(NUM_questionnaIRES):
+    for q in range(NUM_QUESTIONNAIRES):
         questionnaire = []
         for i in range(NUM_IMGS):
             if (q + i) > (NUM_IMGS - 1):
