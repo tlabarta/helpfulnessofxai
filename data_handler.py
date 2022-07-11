@@ -47,6 +47,7 @@ def get_labels():
     download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json",".",
                  "data/imagenet_class_index.json")
 
+
     with open("data/imagenet_class_index.json", "r") as h:
         labels = json.load(h)
         
@@ -85,4 +86,4 @@ def get_figure_from_img_array(image_np, title):
     plt.close()
 
     return fig
-            
+
