@@ -42,15 +42,23 @@ def get_files(path):
     return files
 
 
-def get_labels():
+def get_labels(path=None):
     # Download class labels from imagenet dataset
-    download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json",".",
+    if not path :
+        download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json",".",
                  "data/imagenet_class_index.json")
 
 
-    with open("data/imagenet_class_index.json", "r") as h:
-        labels = json.load(h)
-        
+        with open("data/imagenet_class_index.json", "r") as h:
+            labels = json.load(h)
+
+    else :
+        download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
+                     path)
+
+        with open(path, "r") as h:
+            labels = json.load(h)
+
     return labels
 
 
