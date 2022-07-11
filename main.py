@@ -22,7 +22,6 @@ def main():
 
     # load questionnaire_list from .json or .pickle
     folder = os.path.join(os.path.curdir, "data", "question_generation", "questionnaires.pickle")
-    #folder = "/data/question_generation/questionnaires.pickle"
     questionnaires_list = data_handler.get_questionnaires(folder)
 
     # create root folder for questionnaires
