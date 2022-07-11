@@ -58,12 +58,6 @@ def get_question_image(testset_path, img_idx, labels):
     img_path = img_folder.imgs[img_idx][0]
     pil_img = img_folder.loader(img_path)
     img_org_np = np.expand_dims(np.array(pil_img.resize((224, 224))), 0)
-    resize_and_crop = transforms.Compose([
-                                        transforms.Resize(256),
-                                        transforms.CenterCrop(224),
-                                        transforms.ToTensor(),
-                                    ])
-    # img_org_np = resize_and_crop(pil_img).permute(1, 2, 0).unsqueeze(0).numpy()
     img_name = img_path.split(os.sep)[-1]
     # preprocessing
     img_prep_torch = transform()(pil_img)
