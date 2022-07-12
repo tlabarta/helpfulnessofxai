@@ -9,15 +9,14 @@ from methods import gradcam, LRP, SHAP, lime, integrated_gradients, confidence_s
 
 def main():
     parser = argparse.ArgumentParser(description='run explain methods')
-    parser.add_argument('--LRP', type=bool, default=True)
-    parser.add_argument('--gradCam', type=bool, default=True)
-    parser.add_argument('--LIME', type=bool, default=True)
-    parser.add_argument('--IntGrad', type=bool, default=True)
-    parser.add_argument('--CS', type=bool, default=True)
-    parser.add_argument('--SHAP', type=bool, default=True)
+    parser.add_argument('--LRP', type=str, default="True")
+    parser.add_argument('--gradCam', type=str, default="True")
+    parser.add_argument('--LIME', type=str, default="True")
+    parser.add_argument('--IntGrad', type=str, default="True")
+    parser.add_argument('--CS', type=str, default="True")
+    parser.add_argument('--SHAP', type=str, default="True")
     args = parser.parse_args()
-
-
+    print(args)
     labels = data_handler.get_labels()
 
     # load questionnaire_list from .json or .pickle
@@ -49,24 +48,24 @@ def main():
             img_org_np, img_prep_torch, img_name, img_true_label_str = data_handler.get_question_image(folder, img_idx,
                                                                                                        labels)
             fig_explanation = None
-            if xai_used == "gradCAM" and args.gradCam:
+            if xai_used == "gradCAM" and args.gradCam == "True":
                 fig_explanation = gradcam.explain(model_used.model, img_prep_torch, img_org_np)
 
-            elif xai_used == "LRP" and args.LRP:
+            elif xai_used == "LRP" and args.LRP == "True":
                 fig_explanation = LRP.explain(model_used.model, img_prep_torch, img_name, model_used.name)
 
-            elif xai_used == "LIME" and args.LIME:
+            elif xai_used == "LIME" and args.LIME == "True":
                 lime_ex = lime.LIMEExplainer(model_used)
                 fig_explanation = lime_ex.explain(img_org_np)
 
-            elif xai_used == "SHAP" and args.SHAP:
+            elif xai_used == "SHAP" and args.SHAP == "True":
                 fig_explanation = SHAP.explain(model_used.model, img_prep_torch, img_org_np, labels)
 
-            elif xai_used == "IntegratedGradients" and args.IntGrad:
+            elif xai_used == "IntegratedGradients" and args.IntGrad == "True":
                 ige = integrated_gradients.IntegratedGradientsExplainer(model_used)
                 fig_explanation = ige.explain(img_prep_torch)
 
-            elif xai_used == "ConfidenceScores" and args.CS:
+            elif xai_used == "ConfidenceScores" and args.CS == "True":
                 fig_explanation = confidence_scores.explain(model_used, img_prep_torch, labels, 3)
 
             # save explanation and original image for current question in appropriate questionnaire folder

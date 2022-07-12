@@ -12,12 +12,11 @@ Adjustments to the code are marked
 """
 
 
-
 # --------------------------------------
 # Visualizing data
 # --------------------------------------
-#modified for easier saving
-def heatmap(R, sx, sy,img,name=None,save=False):
+# modified for easier saving
+def heatmap(R, sx, sy, img, name=None, save=False):
     b = 10 * ((np.abs(R) ** 3.0).mean() ** (1.0 / 3))
 
     from matplotlib.colors import ListedColormap
@@ -29,25 +28,25 @@ def heatmap(R, sx, sy,img,name=None,save=False):
     plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
     plt.axis('off')
 
-    #modified
+    # modified
     # if save :
     #     name = "results/LRP/" + name +".jpg"
-        #plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
+    # plt.imsave(name,R, cmap=my_cmap, vmin=-b, vmax=b)
     img = img.squeeze()
-    img = torch.permute(img,[1,2,0])
-    img = np.matmul(img[...,:3], [0.299, 0.587, 0.114])
+    img = torch.permute(img, [1, 2, 0])
+    img = np.matmul(img[..., :3], [0.299, 0.587, 0.114])
     img = img[:, :, np.newaxis]
 
     plt.imshow(R, cmap=my_cmap, vmin=-b, vmax=b)
     cbar = plt.colorbar(orientation="horizontal", shrink=0.75, ticks=[-1, 0, 1])
-    plt.imshow(img, cmap='gray',interpolation='None',alpha=0.15)
-    cbar.ax.set_xticklabels(["least relevant","","most relevant"])
-    #plt.show()
+    plt.imshow(img, cmap='gray', interpolation='None', alpha=0.15)
+    cbar.ax.set_xticklabels(["least relevant", "", "most relevant"])
+    # plt.show()
 
     # plt.close()
     fig = plt.gcf()
     plt.close()
-    
+
     return fig
 
 
@@ -115,8 +114,8 @@ def toconv(layers, model):
     return newlayers
 
 
-#TODO adjust to json label file
-def explain(model,img,file,model_str, save=True):
+# TODO adjust to json label file
+def explain(model, img, file, model_str, save=True):
     """
     :param picture: at the moment string to picture location, can be changed to the picture itself
     :param model: the model to use, not the name the whole model itself
@@ -125,7 +124,6 @@ def explain(model,img,file,model_str, save=True):
     :return: None
     """
     X = copy.deepcopy(img)
-
 
     mean = torch.Tensor([0.485, 0.456, 0.406]).reshape(1, -1, 1, 1)
     std = torch.Tensor([0.229, 0.224, 0.225]).reshape(1, -1, 1, 1)
@@ -140,7 +138,7 @@ def explain(model,img,file,model_str, save=True):
     scores = np.array(A[-1].data.view(-1))
     ind = np.argsort(-scores)
 
-    #for i in ind[:10]:
+    # for i in ind[:10]:
     #    print('%20s (%3d): %6.3f' % (model.labels[i], i, scores[i]))
 
     topClass = ind[0]
@@ -177,11 +175,11 @@ def explain(model,img,file,model_str, save=True):
     name = os.path.splitext(file)[0]
     name = name + "_" + model_str
     for i, l in enumerate(layers_map):
-        if l == layers_map[-1] and model_str=="vgg":
-            #heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
+        if l == layers_map[-1] and model_str == "vgg":
+            # heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
             pass
         else:
-            #heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
+            # heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
             pass
     A[0] = A[0].data.requires_grad_(True)
 
@@ -197,6 +195,6 @@ def explain(model,img,file,model_str, save=True):
     R[0] = (A[0] * c + lb * cp + hb * cm).data
 
     if model_str == "alexnet":
-        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5,img,name, save)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, img, name, save)
     else:
-        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5,img)
+        return heatmap(np.array(R[0][0]).sum(axis=0), 3.5, 3.5, img)

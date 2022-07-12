@@ -11,6 +11,7 @@ from scipy import rand
 import data_handler
 from models import AlexNet, Vgg16
 
+
 def generate_model_testset_results(model, testset_path):
     """
     Evaluate whole 'imagenetv2-matched-frequency-format-val' dataset
