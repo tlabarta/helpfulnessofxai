@@ -1,13 +1,12 @@
-from torchvision import datasets
-from torch.utils import data
-import torchvision.transforms as transforms
 import json
-from torchvision.datasets.utils import download_url
-import os
-import numpy as np
-import pickle
 import matplotlib.pyplot as plt
+import numpy as np
 import os
+import pickle
+import torchvision.transforms as transforms
+from torch.utils import data
+from torchvision.datasets.utils import download_url
+from torchvision import datasets
 
 
 

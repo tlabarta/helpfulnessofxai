@@ -1,13 +1,10 @@
-import torch
-import numpy as np
-import cv2
-import torch.nn as nn
 import copy
-from copy import deepcopy
-
-import matplotlib
+import cv2
+import numpy as np
 from matplotlib import pyplot as plt
 import os
+import torch
+
 """
 Model code and utility functions downloaded from   :
     https://git.tu-berlin.de/gmontavon/lrp-tutorial/-/tree/main
@@ -62,12 +59,12 @@ def newlayer(layer, g):
     layer = copy.deepcopy(layer)
 
     try:
-        layer.weight = nn.Parameter(g(layer.weight))
+        layer.weight = torch.nn.Parameter(g(layer.weight))
     except AttributeError:
         pass
 
     try:
-        layer.bias = nn.Parameter(g(layer.bias))
+        layer.bias = torch.nn.Parameter(g(layer.bias))
     except AttributeError:
         pass
 
@@ -82,7 +79,7 @@ def toconv(layers, model):
     newlayers = []
     for i, layer in enumerate(layers):
 
-        if isinstance(layer, nn.Linear):
+        if isinstance(layer, torch.nn.Linear):
 
             newlayer = None
             if model == "alexnet":
@@ -100,15 +97,15 @@ def toconv(layers, model):
                 if i == 0:  # 0 for vgg and 1 for alex
                     m, n = 512, layer.weight.shape[0]
 
-                    newlayer = nn.Conv2d(m, n, 7)
-                    newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 7, 7))
+                    newlayer = torch.nn.Conv2d(m, n, 7)
+                    newlayer.weight = torch.nn.Parameter(layer.weight.reshape(n, m, 7, 7))
 
                 else:
                     m, n = layer.weight.shape[1], layer.weight.shape[0]
-                    newlayer = nn.Conv2d(m, n, 1)
-                    newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 1, 1))
+                    newlayer = torch.nn.Conv2d(m, n, 1)
+                    newlayer.weight = torch.nn.Parameter(layer.weight.reshape(n, m, 1, 1))
 
-            newlayer.bias = nn.Parameter(layer.bias)
+            newlayer.bias = torch.nn.Parameter(layer.bias)
 
             newlayers += [newlayer]
 
@@ -127,7 +124,7 @@ def explain(model,img,file,model_str, save=True):
     :param save: if we want to save the results or not
     :return: None
     """
-    X = deepcopy(img)
+    X = copy.deepcopy(img)
 
 
     mean = torch.Tensor([0.485, 0.456, 0.406]).reshape(1, -1, 1, 1)
