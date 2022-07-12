@@ -9,7 +9,6 @@ from torchvision.datasets.utils import download_url
 from torchvision import datasets
 
 
-
 def get_image(path):
     # get the image from the dataloader
     dataset = datasets.ImageFolder(root=path, transform=transform())
@@ -26,32 +25,31 @@ def transform():
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
     transform = transforms.Compose([
-                                        transforms.Resize(256),
-                                        transforms.CenterCrop(224),
-                                        transforms.ToTensor(),
-                                        normalize,
-                                    ])
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        normalize,
+    ])
     return transform
 
 
 def get_files(path):
     images = "images/"
-    files = os.listdir(path+images)
+    files = os.listdir(path + images)
 
     return files
 
 
 def get_labels(path=None):
     # Download class labels from imagenet dataset
-    if not path :
-        download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json",".",
-                 "data/imagenet_class_index.json")
-
+    if not path:
+        download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
+                     "data/imagenet_class_index.json")
 
         with open("data/imagenet_class_index.json", "r") as h:
             labels = json.load(h)
 
-    else :
+    else:
         download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".",
                      path)
 
@@ -78,9 +76,9 @@ def get_question_image(testset_path, img_idx, labels):
 
 
 def get_questionnaires(path):
-    with open(path,'rb') as f:
+    with open(path, 'rb') as f:
         questionnaires_list = pickle.load(f)
-    
+
     return questionnaires_list
 
 
@@ -93,4 +91,3 @@ def get_figure_from_img_array(image_np, title):
     plt.close()
 
     return fig
-
