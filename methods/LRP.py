@@ -85,13 +85,13 @@ def toconv(layers, model):
             if model == "alexnet":
                 if i == 1:
                     m, n = 256, layer.weight.shape[0]
-                    newlayer = nn.Conv2d(m, n, 6)
-                    newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 6, 6))
+                    newlayer = torch.nn.Conv2d(m, n, 6)
+                    newlayer.weight = torch.nn.Parameter(layer.weight.reshape(n, m, 6, 6))
 
                 else:
                     m, n = layer.weight.shape[1], layer.weight.shape[0]
-                    newlayer = nn.Conv2d(m, n, 1)
-                    newlayer.weight = nn.Parameter(layer.weight.reshape(n, m, 1, 1))
+                    newlayer = torch.nn.Conv2d(m, n, 1)
+                    newlayer.weight = torch.nn.Parameter(layer.weight.reshape(n, m, 1, 1))
 
             else:
                 if i == 0:  # 0 for vgg and 1 for alex
