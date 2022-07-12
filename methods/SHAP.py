@@ -1,7 +1,8 @@
+from copy import deepcopy
 import matplotlib.pyplot as plt
 import numpy as np
+
 import shap
-from copy import deepcopy
 
 def explain(model, img, org_img, labels):
 

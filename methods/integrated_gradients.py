@@ -1,10 +1,11 @@
-from locale import format_string
-from captum.attr import IntegratedGradients
-from captum.attr import NoiseTunnel
-from captum.attr import visualization as viz
 import numpy as np
 import torch
 from copy import deepcopy
+from locale import format_string
+
+from captum.attr import IntegratedGradients
+from captum.attr import NoiseTunnel
+from captum.attr import visualization as viz
 
 
 class IntegratedGradientsExplainer():

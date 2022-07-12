@@ -1,7 +1,6 @@
+import json
 import torchvision.models as models
 from torchvision.datasets.utils import download_url
-import json
-
 
 class Vgg16:
 
