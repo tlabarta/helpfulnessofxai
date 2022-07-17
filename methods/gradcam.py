@@ -15,7 +15,6 @@ def explain(model, img, org_img):
     img = deepcopy(img)
     org_img = deepcopy(org_img)
 
-    #org_img = org_img / 255
     org_img = np.float32(org_img) / 255
     org_img = np.matmul(org_img[..., :3], [0.299, 0.587, 0.114]).squeeze()
     org_img = org_img[:, :, np.newaxis]

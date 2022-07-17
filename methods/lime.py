@@ -28,10 +28,7 @@ class LIMEExplainer():
 
         img = Image.fromarray(img_org[0]).convert('L')
 
-        #temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=5, hide_rest=True)
-        # open the original image and grayscale it 
-
-        # tmake image transparent
+        # make image transparent
         img.putalpha(50)
 
         # resize image 
