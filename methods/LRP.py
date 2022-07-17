@@ -114,7 +114,7 @@ def toconv(layers, model):
     return newlayers
 
 
-# TODO adjust to json label file
+
 def explain(model, img, file, model_str, save=True):
     """
     :param picture: at the moment string to picture location, can be changed to the picture itself
@@ -175,12 +175,12 @@ def explain(model, img, file, model_str, save=True):
     name = os.path.splitext(file)[0]
     name = name + "_" + model_str
     for i, l in enumerate(layers_map):
-        if l == layers_map[-1] and model_str == "vgg":
-            # heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
-            pass
-        else:
-            # heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
-            pass
+        if l == layers_map[-1] and model_str == "vgg" and False:
+            heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5, name, save)
+
+        elif False : # we dont need to see each layer
+            heatmap(np.array(R[l][0]).sum(axis=0), 0.5 * i + 1.5, 0.5 * i + 1.5)
+
     A[0] = A[0].data.requires_grad_(True)
 
     lb = (A[0].data * 0 + (0 - mean) / std).requires_grad_(True)

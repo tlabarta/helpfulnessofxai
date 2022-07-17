@@ -48,9 +48,6 @@ def generate_model_testset_results(model, testset_path):
 
 
 def create_questionnairs(imgs_idx, xai_methods, model_names, df_vgg, df_alex, seed=None):
-    """
-
-    """
     if seed:
         random.seed(seed)
     # create first half of question with fixed images for all questionnaire forms
@@ -105,9 +102,10 @@ def add_random_unique_images(questionnaires_list, imgs_idx, df_alex, df_vgg, mod
                 else:
                     questionnaires_list[idx_qn][idx_q] += (False,)
                     df_variants_count.loc[question[2], "vgg", False]["count"] += 1
-
-        # add addtional random images to each questionnaire such that for every variant in df_variants_count the 
-        # count will be 1
+        """
+        add addtional random images to each questionnaire such that for every variant in df_variants_count the 
+        count will be 1
+        """
         while df_variants_count["count"].sum() != FINAL_QUESTIONNAIRE_SIZE:
             rand_img_idx = imgs_idx.pop(random.randint(0, len(imgs_idx) - 1))
 
@@ -144,8 +142,10 @@ def shuffle_questions(questionnaire):
 
 
 def main():
-    # create questionnaires
-    # must only be evaluated if testset hasn't already been evaluated
+    """
+    create questionnaires
+    must only be evaluated if testset hasn't already been evaluated
+    """
     folder_vgg = os.path.join(os.path.curdir, "data", "stats", "df_vgg.pickle")
     folder_alex = os.path.join(os.path.curdir, "data", "stats", "df_alexnet.pickle")
     if not (os.path.exists(folder_alex) and os.path.exists(folder_vgg)):
